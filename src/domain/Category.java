@@ -30,4 +30,6 @@ public class Category {
     public void setCate_pro(List<Product> cate_pro) {
         this.cate_pro = cate_pro;
     }
+
+
 }
