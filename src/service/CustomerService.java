@@ -5,8 +5,8 @@ import ui.CommonUI;
 import domain.Customer;  // Customer 객체 사용 시 필요
 import java.util.List;   // List<Customer> 사용 시 필요
 
-import static ui.CommonUI.inputInteger;
-import static ui.CommonUI.startCustomerScreen;
+import static ui.CommonUI.*;
+
 
 public class CustomerService {
 
@@ -63,8 +63,18 @@ public class CustomerService {
     }
 
     private void register() {
-        // 구현 예정
+
+        System.out.println("\n====== 회원 가입을 진행합니다. ======");
+
+        String name = inputString("# 회원명: ");
+        String phone = inputString("# 전화번호: ");
+        String pw = inputString("# 비밀번호: ");
+
+
+        customerRepository.addUser(name, phone, pw);
+        System.out.println("# 회원가입이 완료되었습니다.");
     }
+
 
     private void findUser() {
         // 구현 예정
