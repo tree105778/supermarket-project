@@ -1,31 +1,16 @@
 package domain;
 
-public class Customer {
-    private int userId;
+public class CustomerDTO {
     private String userName;
     private int totalPay;
     private int userPoint;
     private String phoneNumber;
-    private boolean active;
-    private String userPw;
 
-    public Customer(int userId, String userName, int totalPay, int userPoint, String phoneNumber, boolean active, String userPw) {
-        this.userId = userId;
+    public CustomerDTO(String userName, int totalPay, int userPoint, String phoneNumber) {
         this.userName = userName;
         this.totalPay = totalPay;
         this.userPoint = userPoint;
         this.phoneNumber = phoneNumber;
-        this.active = active;
-        this.userPw = userPw;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public String getUserName() {
@@ -58,21 +43,5 @@ public class Customer {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public String getUserPw() {
-        return userPw;
-    }
-
-    public void setUserPw(String userPw) {
-        this.userPw = userPw;
     }
 }
