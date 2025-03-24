@@ -1,6 +1,8 @@
 package domain;
 
 public class Customer {
+    private static final String ADMIN_ID = "admin";
+    private static final String ADMIN_PW = "admin";
     private int userId;
     private String userName;
     private int totalPay;
