@@ -63,7 +63,7 @@ public class ProductService {
         }
     }
 
-    public List<Product> searchProductDataForAdmin() throws Exception {
+    public List<Product> searchProductDataForAdmin(){
         System.out.println("\n============== 관리자 모드입니다. ===============");
         System.out.println("\n============== 제품 검색 조건을 선택하세요. ===============");
         System.out.println("[ 1. 제품명검색 | 2. 카테고리검색 | 3. 전체검색 ]");
@@ -98,7 +98,7 @@ public class ProductService {
 
 
     // 제품 검색 로직 -> 고객용
-    public List<Product> searchProductDataForCustomer() throws Exception {
+    public List<Product> searchProductDataForCustomer()  {
         System.out.println("\n============== 제품 검색 조건을 선택하세요. ===============");
         System.out.println("[ 1. 제품명검색 | 2. 카테고리검색 | 3. 전체검색 ]");
         int selection = inputInteger(">>> ");
