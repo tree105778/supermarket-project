@@ -4,6 +4,7 @@ import common.Condition;
 import domain.Product;
 import repository.ProductRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static ui.CommonUI.inputInteger;
@@ -12,6 +13,55 @@ import static ui.CommonUI.inputString;
 public class ProductService {
 
     ProductRepository productRepository;
+
+    private void insertProductData() {
+        System.out.println("\n ====== 새로운 제품을 추가합니다. ======");
+        String productName = inputString("# 제품명: ");
+        String category_name = inputString("# 카테고리명: ");
+
+        // 해당 제품의 존재 여부
+        boolean isExist = productRepository.isDeletedProduct(productName, category_name);
+        int stockNum = inputInteger("# 재고수: ");
+        int productPrice = 0;
+        // 없는 제품인 경우 추가로 제품 가격을 입력받음.
+        if(!isExist){
+            productPrice = inputInteger("# 제품 가격: ");
+        }
+        productRepository.addProductData(productName, category_name, stockNum, productPrice, isExist);
+
+
+        System.out.printf("\n### [%s] 정보가 정상적으로 추가되었습니다.", productName);
+    }
+
+    private void deleteProductData() {
+        try {
+            System.out.println("\n### 삭제를 위한 제품 검색을 시작합니다.");
+            List<Product> products = searchProductDataForAdmin();
+
+            if (products.size() > 0) {
+                List<Integer> productsNums = new ArrayList<>();
+                for (Product product : products) {
+                    System.out.println(product);
+                    productsNums.add(product.getProductId());
+                }
+                System.out.println("\n### 삭제할 제품의 번호를 입력하세요.");
+                int delProductNum = inputInteger(">>> ");
+
+                if (productsNums.contains(delProductNum)) {
+                    Product delProduct = productRepository.deleteProductData(delProductNum);
+                    System.out.printf("\n### 제품번호: %d -> %s 제품의 정보를 정상 삭제하였습니다.\n"
+                            , delProduct.getProductId(), delProduct.getProductName());
+                } else {
+                    System.out.println("\n### 검색된 제품 번호로만 삭제가 가능합니다.");
+                }
+
+            } else {
+                System.out.println("\n### 조회 결과가 없습니다.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private List<Product> searchProductDataForAdmin() throws Exception {
         System.out.println("\n============== 관리자 모드입니다. ===============");
@@ -79,11 +129,17 @@ public class ProductService {
         return productRepository.searchProductList(condition, keyword, false);
     }
 
-
-    private void showSearchProductData() {
+    // 관리자면 true, 고객이면 false
+    private void showSearchProductData(boolean admin) {
 
         try {
-            List<Product> products = searchProductDataForCustomer();
+            List<Product> products = new ArrayList<>();
+            if (admin) {
+                products = searchProductDataForAdmin();
+            }
+            else{
+                products = searchProductDataForCustomer();
+            }
             int count = products.size();
             if(count > 0) {
                 System.out.printf("\n======================================= 검색 결과(총 %d건) =======================================\n", count);

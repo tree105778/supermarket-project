@@ -70,7 +70,7 @@ public class ProductRepository {
     }
 
 
-    public void addProdcutData(String productName, String categoryName, int stock, int productPrice, boolean isExist){
+    public void addProductData(String productName, String categoryName, int stock, int productPrice, boolean isExist){
 
         int categoryId = categoryRepository.getCategoryId(categoryName);
         String sql = "";
@@ -105,6 +105,35 @@ public class ProductRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public Product deleteProductData(int product_id){
+        String sql = "UPDATE product SET active = 'N' WHERE product_id = ?";
+        String sear = "SELECT * FROM movies WHERE product_id = ?";
+
+        Product temp = new Product(0, "", 0, 0, 0, false);
+
+        try(Connection conn = DBConnectionManager.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            PreparedStatement pstmt2 = conn.prepareStatement(sear);){
+
+            pstmt.setInt(1, product_id);
+            pstmt2.setInt(1, product_id);
+            ResultSet rs = pstmt2.executeQuery();
+            while(rs.next()){
+                temp.setProductId(rs.getInt("product_id"));
+                temp.setProductName(rs.getString("product_name"));
+                temp.setPrice(rs.getInt("price"));
+                temp.setStock(rs.getInt("stock"));
+                temp.setActive(false);
+                temp.setCategoryId(rs.getInt("category_id"));
+            }
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return temp;
     }
 
 
