@@ -1,6 +1,8 @@
 package domain;
 
 public class Customer {
+    private static final String ADMIN_ID = "admin";
+    private static final String ADMIN_PW = "admin";
     private int userId;
     private String userName;
     private int totalPay;
@@ -9,10 +11,20 @@ public class Customer {
     private boolean active;
     private String userPw;
 
+    public Customer(int userId, String userName, int totalPay, int userPoint, String phoneNumber, boolean active, String userPw) {
+        this.userId = userId;
+        this.userName = userName;
+        this.totalPay = totalPay;
+        this.userPoint = userPoint;
+        this.phoneNumber = phoneNumber;
+        this.active = active;
+        this.userPw = userPw;
+    }
 
     public int getUserId() {
         return userId;
     }
+
 
     public void setUserId(int userId) {
         this.userId = userId;
