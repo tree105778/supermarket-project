@@ -69,4 +69,25 @@ public class CategoryRepository {
             return false;
         }
     }
+
+    // 4. 카테고리이름으로 카테고리 아이디 리턴
+    public int getCategoryId(String name){
+        String sql = "SELECT category_id FROM category WHERE name = ?";
+        int categoryId = 0;
+
+        try( Connection conn1 = DBConnectionManager.getConnection();
+             PreparedStatement pstmt = conn1.prepareStatement(sql);
+        ){
+            pstmt.setString(1, name);
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()){
+                categoryId = rs.getInt("category_id");
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return categoryId;
+    }
 }

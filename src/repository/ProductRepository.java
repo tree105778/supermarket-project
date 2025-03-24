@@ -13,6 +13,8 @@ import java.util.List;
 
 public class ProductRepository {
 
+    CategoryRepository categoryRepository;
+
     // admin이 true면 관리자, false면 고객입장 -> 삭제된 물품의 검색 포함 여부
     public List<Product> searchProductList(Condition condition, String keyword, boolean admin){
 
@@ -65,6 +67,71 @@ public class ProductRepository {
         }
 
         return products;
+    }
+
+
+    public void addProdcutData(String productName, String categoryName, int stock, int productPrice, boolean isExist){
+
+        int categoryId = categoryRepository.getCategoryId(categoryName);
+        String sql = "";
+
+        // 이미 존재하는 제품인 경우
+        if (isExist) {
+            sql += "UPDATE product SET active = 'Y', stock = ?" +
+                    " WHERE product_name = ?";
+        }
+        // 새로운 제품을 등록하는 경우
+        else{
+            sql += "INSERT INTO product VALUES (product_seq.NEXTVAL, " +
+                    "?, ?, ?, 'Y', ?";
+        }
+
+        try(Connection conn = DBConnectionManager.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+        )   {
+            if (isExist) {
+                pstmt.setInt(1, stock);
+                pstmt.setString(2, productName);
+            }
+            else{
+                pstmt.setString(1, productName);
+                pstmt.setInt(2, productPrice);
+                pstmt.setInt(3, stock);
+                pstmt.setInt(4, categoryId);
+            }
+            pstmt.executeUpdate();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    // 제품이 이미 있는 지 없는 확인
+    public boolean isDeletedProduct(String productName, String categoryName){
+        boolean result = false;
+        String sql = "SELECT * FROM product p JOIN category c " +
+                "ON p.category_id = c.category_id " +
+                "WHERE p.product_name = ?" +
+                "AND c.name = ?";
+
+        try(Connection conn = DBConnectionManager.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+        ){
+            pstmt.setString(1, productName);
+            pstmt.setString(2, categoryName);
+
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()){
+                result = true;
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
 
