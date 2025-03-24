@@ -20,6 +20,7 @@ public class ProductRepository {
 
         List<Product> products = new ArrayList<>();
         String sql = "SELECT * FROM product";
+        // 고객용 -> 활성화된 제품만 확인
         if(!admin) {
             if (condition == Condition.NAME) {
                 sql += " WHERE product_name = ? AND active = 'Y'";
@@ -69,7 +70,7 @@ public class ProductRepository {
         return products;
     }
 
-
+    
     public void addProductData(String productName, String categoryName, int stock, int productPrice, boolean isExist){
 
         int categoryId = categoryRepository.getCategoryId(categoryName);

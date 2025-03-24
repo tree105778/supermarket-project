@@ -14,7 +14,7 @@ public class ProductService {
 
     ProductRepository productRepository;
 
-    private void insertProductData() {
+    public void insertProductData() {
         System.out.println("\n ====== 새로운 제품을 추가합니다. ======");
         String productName = inputString("# 제품명: ");
         String category_name = inputString("# 카테고리명: ");
@@ -33,7 +33,7 @@ public class ProductService {
         System.out.printf("\n### [%s] 정보가 정상적으로 추가되었습니다.", productName);
     }
 
-    private void deleteProductData() {
+    public void deleteProductData() {
         try {
             System.out.println("\n### 삭제를 위한 제품 검색을 시작합니다.");
             List<Product> products = searchProductDataForAdmin();
@@ -63,7 +63,7 @@ public class ProductService {
         }
     }
 
-    private List<Product> searchProductDataForAdmin() throws Exception {
+    public List<Product> searchProductDataForAdmin() throws Exception {
         System.out.println("\n============== 관리자 모드입니다. ===============");
         System.out.println("\n============== 제품 검색 조건을 선택하세요. ===============");
         System.out.println("[ 1. 제품명검색 | 2. 카테고리검색 | 3. 전체검색 ]");
@@ -98,7 +98,7 @@ public class ProductService {
 
 
     // 제품 검색 로직 -> 고객용
-    private List<Product> searchProductDataForCustomer() throws Exception {
+    public List<Product> searchProductDataForCustomer() throws Exception {
         System.out.println("\n============== 제품 검색 조건을 선택하세요. ===============");
         System.out.println("[ 1. 제품명검색 | 2. 카테고리검색 | 3. 전체검색 ]");
         int selection = inputInteger(">>> ");
