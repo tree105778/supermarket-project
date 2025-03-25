@@ -26,7 +26,7 @@ public class CustomerRepository {
             pstmt.setString(3, userPw);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
@@ -51,6 +51,7 @@ public class CustomerRepository {
         try (Connection conn = DBConnectionManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             ResultSet rs = pstmt.executeQuery();
+
             while (rs.next()) {
                 boolean active = rs.getString("active").equals("Y");
                 Customer customer = new Customer(rs.getInt("USER_ID"),
@@ -64,7 +65,7 @@ public class CustomerRepository {
                 customers.add(customer);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
         return customers;
@@ -78,6 +79,7 @@ public class CustomerRepository {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, "%" + username + "%");
             ResultSet rs = pstmt.executeQuery();
+
             while (rs.next()) {
                 CustomerDTO customer = new CustomerDTO(rs.getString("user_name"),
                         rs.getInt("total_pay"),
@@ -87,9 +89,10 @@ public class CustomerRepository {
                 customer.setUserId(rs.getString("user_id"));
                 customer.setUserId(rs.getString("user_id"));
                 customers.add(customer);
+
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return customers;
     }

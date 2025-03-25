@@ -35,7 +35,7 @@ public class BuyListRepository {
                         (rs.getInt("count") - rs.getInt("refund_count")));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return total;
     }
@@ -49,7 +49,7 @@ public class BuyListRepository {
             pstmt.setInt(2, buyId);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }
