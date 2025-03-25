@@ -41,4 +41,12 @@ public class buyHistory {
     public void setTotalPrice(int totalPrice) {
         this.totalPrice = totalPrice;
     }
+
+    @Override
+    public String toString() {
+         return "구매번호: " + buyId +
+                ", 총 구매 금액: " + totalPrice +
+                ", 고객ID: " + user.getUserId() +
+                ", 구매 시각: " + buyTime;
+    }
 }
