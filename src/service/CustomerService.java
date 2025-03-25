@@ -98,7 +98,7 @@ public class CustomerService {
             return;
         }
         for(int i = 0; i < users.size(); i++) {
-            String phoneNumber = "#".repeat(7) + users.get(i).getPhoneNumber().substring(7);
+            String phoneNumber = "#".repeat(7) + users.get(i).getPhoneNumber().replace("-", "").substring(7);
             System.out.printf("### %d. 회원명: %s, 전화번호: %s, 포인트: %d\n",
                     i + 1,
                     users.get(i).getUserName(),
