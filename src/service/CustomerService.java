@@ -1,11 +1,16 @@
 package service;
 
 
-import static ui.CommonUI.inputInteger;
-import static ui.CommonUI.startCustomerScreen;
+import domain.CustomerDTO;
+import repository.CustomerRepository;
+
+import java.util.List;
+
+import static ui.CommonUI.*;
 
 public class CustomerService {
 
+    CustomerRepository customerRepository = new CustomerRepository();
     public void start() {
         while (true) {
             startCustomerScreen();
@@ -39,6 +44,7 @@ public class CustomerService {
 
     private void purchase() {
         String username = inputString("### 구매하기 전 회원 이름을 입력하세요 >> ");
+
         List<CustomerDTO> users = customerRepository.searchByUserName(username);
         if (users.isEmpty()) {
             System.out.println("회원 이름이 없습니다.");
