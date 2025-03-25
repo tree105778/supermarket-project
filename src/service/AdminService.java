@@ -1,8 +1,8 @@
 package service;
 
+import domain.BuyHistory;
 import domain.Category;
 import domain.Customer;
-import domain.buyHistory;
 import repository.AdminRepository;
 import repository.BuyHistoryRepository;
 import repository.CategoryRepository;
@@ -164,11 +164,11 @@ public class AdminService {
 
             System.out.println("\n============== 구매 내역 ================");
             try {
-                List<buyHistory> histories = adminRepository.searchBuyHistory(option, month, day, name);
+                List<BuyHistory> histories = adminRepository.searchBuyHistory(option, month, day, name);
                 int count = histories.size();
                 if(count > 0) {
                     System.out.printf("\n======================================= 검색 결과(총 %d건) =======================================\n", count);
-                    for (buyHistory history : histories) {
+                    for (BuyHistory history : histories) {
                         System.out.println(history);
                     }
                 } else {
@@ -208,7 +208,7 @@ public class AdminService {
                             act += "N";
                         }
                         String phonenumber = "#".repeat(7) + customer.getPhoneNumber().substring(7);
-                        System.out.printf("### 회원명: %s, 전화번호: %s, 포인트: %d, 탈퇴 여부: %s\n",
+                        System.out.printf("### 회원명: %s, 전화번호: %s, 포인트: %d,  활성화: %s\n",
                                 customer.getUserName(), phonenumber, customer.getUserPoint(), act);
                     }
                 }
@@ -226,7 +226,7 @@ public class AdminService {
                     else{
                         act += "N";
                     }
-                    System.out.printf("### 회원명: %s, 전화번호: %s, 포인트: %d, 탈퇴 여부: %s\n",
+                    System.out.printf("### 회원명: %s, 전화번호: %s, 포인트: %d, 활성화: %s\n",
                             customer.getUserName(), customer.getPhoneNumber(), customer.getUserPoint(), act);
                 }
             }

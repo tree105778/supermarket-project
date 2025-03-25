@@ -1,6 +1,6 @@
 package repository;
 
-import domain.buyHistory;
+import domain.BuyHistory;
 import jdbc.DBConnectionManager;
 
 import java.sql.Connection;
@@ -16,8 +16,8 @@ public class AdminRepository {
     CustomerRepository customerRepository;
 
     // 관리자모드에서 모든 buy_history를 날짜기준 최신순으로 모두 리스트로 묶어서 리턴
-    public List<buyHistory> searchBuyHistory(int option, int month, int day, String name){
-            List<buyHistory> buyHistoryList = new ArrayList<>();
+    public List<BuyHistory> searchBuyHistory(int option, int month, int day, String name){
+            List<BuyHistory> BuyHistoryList = new ArrayList<>();
             String sql = "";
 
             if(option == 1){
@@ -43,13 +43,13 @@ public class AdminRepository {
                 }
                 ResultSet rs = pstmt.executeQuery();
                 while(rs.next()){
-                    buyHistory temp = new buyHistory();
+                    BuyHistory temp = new BuyHistory(0, null, 0, 0);
                     temp.setBuyId(rs.getInt("buy_id"));
 
                     temp.setBuyTime(rs.getTimestamp("buy_time").toLocalDateTime());
-                    temp.setUser(customerRepository.getCustomerByUserId(rs.getInt("user_id")));
+                    temp.setUserId(rs.getInt("user_id"));
                     temp.setTotalPrice(rs.getInt("total_price"));
-                    buyHistoryList.add(temp);
+                    BuyHistoryList.add(temp);
                 }
 
 
@@ -57,7 +57,7 @@ public class AdminRepository {
                 e.printStackTrace();
             }
 
-            return buyHistoryList;
+            return BuyHistoryList;
     }
 
 
