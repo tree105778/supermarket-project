@@ -19,6 +19,7 @@ public class ProductRepository {
     public List<Product> searchProductList(Condition condition, String keyword, boolean admin){
 
         List<Product> products = new ArrayList<>();
+        int categoryId = categoryRepository.getCategoryId(keyword);
         String sql = "SELECT * FROM product";
         // 고객용 -> 활성화된 제품만 확인
         if(!admin) {
@@ -45,7 +46,7 @@ public class ProductRepository {
             PreparedStatement pstmt = conn.prepareStatement(sql);
         ){
             if(condition != Condition.ALL){
-                pstmt.setString(1, keyword);
+                pstmt.setInt(1, categoryId);
             }
 
             ResultSet rs = pstmt.executeQuery();

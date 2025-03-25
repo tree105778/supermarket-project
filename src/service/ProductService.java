@@ -130,7 +130,7 @@ public class ProductService {
     }
 
     // 관리자면 true, 고객이면 false
-    private void showSearchProductData(boolean admin) {
+    public void showSearchProductData(boolean admin) {
 
         try {
             List<Product> products = new ArrayList<>();
@@ -144,7 +144,12 @@ public class ProductService {
             if(count > 0) {
                 System.out.printf("\n======================================= 검색 결과(총 %d건) =======================================\n", count);
                 for (Product product : products) {
-                    System.out.println(product);
+                    if(admin){
+                        System.out.println(product.toString2());
+                    }
+                    else{
+                        System.out.println(product);
+                    }
                 }
             } else {
                 System.out.println("\n### 검색 결과가 없습니다.");

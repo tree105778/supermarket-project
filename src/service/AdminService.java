@@ -17,14 +17,16 @@ public class AdminService {
         System.out.println("================= 관리자 계정입니다. =================");
         System.out.println("### 1. 제품 등록");
         System.out.println("### 2. 제품 삭제");
-        System.out.println("### 3. 고객 조회");
-        System.out.println("### 4. 구매, 환불 내역 조회");
-        System.out.println("### 5. 총매출, 수익 조회");
-        System.out.println("### 6. 관리자 모드 종료");
+        System.out.println("### 3. 제품 조회");
+        System.out.println("### 4. 고객 조회");
+        System.out.println("### 5. 구매, 환불 내역 조회");
+        System.out.println("### 6. 총매출, 수익 조회");
+        System.out.println("### 7. 관리자 모드 종료");
 
     }
 
     public void startAdminUI() {
+        CustomerService customerService = new CustomerService();
         while (true) {
             startAdminScreen();
             int selection = inputInteger(">>> ");
@@ -37,16 +39,19 @@ public class AdminService {
                     deleteProduct();
                     break;
                 case 3:
-                    searchAllCustomer();
+                    searchAllProduct();
                     break;
                 case 4:
-                    showBuyHistory();
+                    searchAllCustomer();
                     break;
                 case 5:
-                    showProfit();
+                    showBuyHistory();
                     break;
                 case 6:
-                    //customerService.start();
+                    showProfit();
+                    break;
+                case 7:
+                    customerService.start();
                     break;
                 default:
                     System.out.println("# 메뉴를 다시 입력하세요!");
@@ -55,8 +60,12 @@ public class AdminService {
         }
     }
 
+    private void searchAllProduct() {
+        productService.showSearchProductData(true);
+    }
 
-        private void showProfit() {
+
+    private void showProfit() {
             System.out.println("\n============== 관리자 모드입니다. ===============");
             System.out.println("\n============== 옵션을 선택하세요. ===============");
             System.out.println("[ 1. 오늘 매출 | 2. 최근 7일 매출 | 3. 최근 30일 매출 | 4. 전 화면으로 돌아가기 ]");

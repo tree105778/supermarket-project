@@ -26,6 +26,15 @@ public class Product {
                 ", 카테고리 번호: " + categoryId ;
     }
 
+    public String toString2() {
+        return "### 제품번호: " + productId +
+                ", 제품 이름: " + productName +
+                ", 제품 가격: " + price + "원"+
+                ", 재고 개수: " + stock + "개" +
+                ", 카테고리 번호: " + categoryId +
+                ", 삭제 여부: " + active;
+    }
+
     public int getProductId() {
         return productId;
     }
