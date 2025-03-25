@@ -4,6 +4,7 @@ import common.Condition;
 import domain.ItemCart;
 import domain.Product;
 import repository.ProductRepository;
+import repository.CategoryRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ import static ui.CommonUI.inputString;
 public class ProductService {
 
     ProductRepository productRepository = new ProductRepository();
+    CategoryRepository categoryRepository = new CategoryRepository();
 
     public void insertProductData() {
         System.out.println("\n ====== 새로운 제품을 추가합니다. ======");
@@ -80,6 +82,16 @@ public class ProductService {
             case 2:
                 System.out.println("\n## 카테고리로 검색합니다.");
                 condition = Condition.CATEGORY;
+                // 카테고리 목록 출력
+                List<String> categories = categoryRepository.findAllCategoryNames();
+                if (categories.isEmpty()) {
+                    System.out.println("\n※ 현재 등록된 카테고리가 없습니다.");
+                } else {
+                    System.out.println("-- 현재 사용 가능한 카테고리 목록 --");
+                    for (String category : categories) {
+                        System.out.println("- " + category);
+                    }
+                }
                 break;
             case 3:
                 System.out.println("\n## 전체로 검색합니다.");
@@ -114,6 +126,16 @@ public class ProductService {
             case 2:
                 System.out.println("\n## 카테고리로 검색합니다.");
                 condition = Condition.CATEGORY;
+                // 카테고리 목록 출력
+                List<String> categories = categoryRepository.findAllCategoryNames();
+                if (categories.isEmpty()) {
+                    System.out.println("\n※ 현재 등록된 카테고리가 없습니다.");
+                } else {
+                    System.out.println("-- 현재 사용 가능한 카테고리 목록 --");
+                    for (String category : categories) {
+                        System.out.println("- " + category);
+                    }
+                }
                 break;
             case 3:
                 System.out.println("\n## 전체로 검색합니다.");
