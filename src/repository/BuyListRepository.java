@@ -25,7 +25,7 @@ public class BuyListRepository {
     }
 
     public int getBuyHistoryTotalPrice(int buy_id, Product product) {
-        String sql = "SELECT * FROM WHERE BUY_ID = " + buy_id;
+        String sql = "SELECT * FROM BUY_LIST WHERE BUY_ID = " + buy_id;
         int total = 0;
         try (Connection conn = DBConnectionManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {

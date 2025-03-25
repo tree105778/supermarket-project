@@ -38,6 +38,22 @@ public class CustomerService {
     }
 
     private void purchase() {
-
+        String username = inputString("### 구매하기 전 회원 이름을 입력하세요 >> ");
+        List<CustomerDTO> users = customerRepository.searchByUserName(username);
+        if (users.isEmpty()) {
+            System.out.println("회원 이름이 없습니다.");
+            return;
+        }
+        for(int i = 0; i < users.size(); i++) {
+            System.out.printf("### %d. 회원명: %s, 전화번호: %s, 포인트: %d\n",
+                    i + 1,
+                    users.get(i).getUserName(),
+                    users.get(i).getPhoneNumber(),
+                    users.get(i).getUserPoint());
+        }
+        int usernum = inputInteger("### 위에 조회된 회원 중 번호를 선택하세요 >> ");
+        if (usernum < 0 || usernum >= users.size()) return;
+        makeLine();
+        PurchaseService.startPurchaseScreen(users.get(usernum));
     }
 }
