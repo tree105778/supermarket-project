@@ -87,6 +87,7 @@ public class CustomerRepository {
                         rs.getString("phone_number")
                 );
                 customer.setUserId(rs.getString("user_id"));
+                customer.setUserId(rs.getString("user_id"));
                 customers.add(customer);
 
             }
