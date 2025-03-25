@@ -84,8 +84,8 @@ public class CustomerRepository {
                         rs.getInt("user_point"),
                         rs.getString("phone_number")
                 );
+                customer.setUserId(rs.getString("user_id"));
                 customers.add(customer);
-
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
