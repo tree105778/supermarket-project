@@ -1,6 +1,7 @@
 package domain;
 
 public class CustomerDTO {
+    private String userId;
     private String userName;
     private int totalPay;
     private int userPoint;
@@ -11,6 +12,14 @@ public class CustomerDTO {
         this.totalPay = totalPay;
         this.userPoint = userPoint;
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUserName() {
