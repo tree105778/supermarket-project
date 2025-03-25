@@ -7,8 +7,6 @@ import static ui.CommonUI.startCustomerScreen;
 
 public class CustomerService {
 
-    AdminService adminService = new AdminService();
-
     public void start() {
         while (true) {
             startCustomerScreen();
@@ -28,7 +26,6 @@ public class CustomerService {
     }
 
     private void connectToAdmin() {
-        adminService.startAdminUI();
     }
 
     private void register() {
