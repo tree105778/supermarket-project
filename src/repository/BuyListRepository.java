@@ -24,6 +24,19 @@ public class BuyListRepository {
         }
     }
 
+    public void refundBuyList(int buyId, int refundCount) {
+        String sql = "UPDATE BUY_LIST SET refund_count = ? WHERE BUY_ID = ?";
+
+        try (Connection conn = DBConnectionManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, refundCount);
+            pstmt.setInt(2, buyId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public int getBuyHistoryTotalPrice(int buy_id, Product product) {
         String sql = "SELECT * FROM BUY_LIST WHERE BUY_ID = " + buy_id;
         int total = 0;
@@ -38,18 +51,5 @@ public class BuyListRepository {
             e.printStackTrace();
         }
         return total;
-    }
-
-    public void refundBuyList(int buyId, int refundCount) {
-        String sql = "UPDATE BUY_LIST SET refund_count = ? WHERE BUY_ID = ?";
-
-        try (Connection conn = DBConnectionManager.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, refundCount);
-            pstmt.setInt(2, buyId);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }

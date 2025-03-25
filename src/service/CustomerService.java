@@ -15,6 +15,7 @@ public class CustomerService {
     private final CustomerRepository customerRepository = new CustomerRepository();
     private final ProductService productService = new ProductService();
     private final AdminService adminService = new AdminService();
+    private final PurchaseService purchaseService = new PurchaseService();
 
     public void start() {
         while (true) {
@@ -105,6 +106,6 @@ public class CustomerService {
         int usernum = inputInteger("### 위에 조회된 회원 중 번호를 선택하세요 >> ");
         if (usernum < 0 || usernum >= users.size()) return;
         makeLine();
-        PurchaseService.startPurchaseScreen(users.get(usernum));
+        purchaseService.startPurchaseScreen(users.get(usernum));
     }
 }
