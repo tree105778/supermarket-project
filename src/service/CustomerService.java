@@ -97,10 +97,11 @@ public class CustomerService {
             return;
         }
         for(int i = 0; i < users.size(); i++) {
+            String phoneNumber = "#".repeat(7) + users.get(i).getPhoneNumber().substring(7);
             System.out.printf("### %d. 회원명: %s, 전화번호: %s, 포인트: %d\n",
                     i + 1,
                     users.get(i).getUserName(),
-                    users.get(i).getPhoneNumber(),
+                    phoneNumber,
                     users.get(i).getUserPoint());
         }
         int usernum = inputInteger("### 위에 조회된 회원 중 번호를 선택하세요 >> ");

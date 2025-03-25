@@ -35,12 +35,12 @@ public class AdminRepository {
                 PreparedStatement pstmt = conn.prepareStatement(sql);
             ){
                 if(option == 1){
-
+                    pstmt.setString(1, name);
                 }
                 else if(option == 2){
-
+                    pstmt.setInt(1, month);
+                    pstmt.setInt(2, day);
                 }
-
                 ResultSet rs = pstmt.executeQuery();
                 while(rs.next()){
                     buyHistory temp = new buyHistory();
