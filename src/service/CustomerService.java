@@ -71,7 +71,7 @@ public class CustomerService {
 
         System.out.printf("===================== 회원 목록 =====================\n");
         for (CustomerDTO user : users) {
-            String phoneNumber = "#".repeat(7) + user.getPhoneNumber().substring(7);
+            String phoneNumber = "#".repeat(7) + user.getPhoneNumber().replace("-", "").substring(7);
             System.out.printf("### 회원명: %s, 전화번호: %s, 포인트: %d\n",
                     user.getUserName(), phoneNumber, user.getUserPoint());
         }
