@@ -1,6 +1,5 @@
 package service;
 
-import ui.CommonUI;
 
 import static ui.CommonUI.inputInteger;
 import static ui.CommonUI.startCustomerScreen;
