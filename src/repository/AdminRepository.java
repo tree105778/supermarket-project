@@ -15,6 +15,7 @@ public class AdminRepository {
 
     CustomerRepository customerRepository;
 
+    // 관리자모드에서 모든 buy_history를 날짜기준 최신순으로 모두 리스트로 묶어서 리턴
     public List<buyHistory> searchBuyHistory(){
             List<buyHistory> buyHistoryList = new ArrayList<>();
             String sql = "SELECT * FROM buy_history b JOIN customer c ON b.user_id = c.user_id ORDER BY b.buy_time DESC";
@@ -26,8 +27,8 @@ public class AdminRepository {
                 while(rs.next()){
                     buyHistory temp = new buyHistory();
                     temp.setBuyId(rs.getInt("buy_id"));
-                    // Date 타입을 LocalDateTime으로 변환하는데 문제가 있음.
-                    temp.setBuyTime(rs.getDate("buy_time").toLocalDate().atTime(6,30));
+
+                    temp.setBuyTime(rs.getTimestamp("buy_time").toLocalDateTime());
                     temp.setUser(customerRepository.getCustomerByUserId(rs.getInt("user_id")));
                     temp.setTotalPrice(rs.getInt("total_price"));
                     buyHistoryList.add(temp);
