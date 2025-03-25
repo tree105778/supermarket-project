@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class BuyHistoryRepository {
     public void buyProducts(Customer customer) {
         String sql = "INSERT INTO BUY_HISTORY (BUY_ID, USER_ID) " +
-                "VALUES (BUY_HISTORY_SEQ, ?)";
+                "VALUES (BUY_HISTORY_SEQ.NEXTVAL, ?)";
 
         try (Connection conn = DBConnectionManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
