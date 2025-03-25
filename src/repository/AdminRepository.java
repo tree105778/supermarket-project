@@ -16,11 +16,19 @@ public class AdminRepository {
     CustomerRepository customerRepository;
 
     // 관리자모드에서 모든 buy_history를 날짜기준 최신순으로 모두 리스트로 묶어서 리턴
-    public List<buyHistory> searchBuyHistory(){
+    public List<buyHistory> searchBuyHistory(int option, int month, int day, String name){
             List<buyHistory> buyHistoryList = new ArrayList<>();
-            String sql = "SELECT * FROM buy_history b JOIN customer c ON b.user_id = c.user_id ORDER BY b.buy_time DESC";
+            String sql = "";
 
-            try(Connection conn = DBConnectionManager.getConnection();
+            if(option == 1){
+
+            }
+
+        else if (option == 3) {
+            sql += "SELECT * FROM buy_history b JOIN customer c ON b.user_id = c.user_id ORDER BY b.buy_time DESC";
+        }
+
+        try(Connection conn = DBConnectionManager.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql);
             ){
                 ResultSet rs = pstmt.executeQuery();

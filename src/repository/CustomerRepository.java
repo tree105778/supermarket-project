@@ -54,13 +54,13 @@ public class CustomerRepository {
 
             while (rs.next()) {
                 boolean active = rs.getString("active").equals("Y");
-                Customer customer = new Customer(rs.getInt("USER_ID"),
+                Customer customer = new Customer(rs.getInt("user_id"),
                         rs.getString("user_name"),
                         rs.getInt("total_pay"),
                         rs.getInt("user_point"),
                         rs.getString("phone_number"),
                         active,
-                        rs.getString("userPw")
+                        rs.getString("userpw")
                 );
                 customers.add(customer);
             }
@@ -98,9 +98,9 @@ public class CustomerRepository {
     }
 
 
+
     // buy_history 객체에 Customer가 있어서 user_id를 바탕으로 Customer를 리턴해주는 메소드 추가 작성
     // buy_history 객체에 Customer가 아니라 user_id를 가지게 되면, 필요없어지는 메소드
-
     public Customer getCustomerByUserId(int user_id){
             // 리턴한 Customer 객체 임의로 작성
             Customer user = new Customer(0, "", 0,
@@ -118,7 +118,7 @@ public class CustomerRepository {
                     user.setPhoneNumber(rs.getString("phone_number"));
                     user.setTotalPay(rs.getInt("total_pay"));
                     user.setActive(rs.getString("active").equals("Y"));
-                    user.setUserPw(rs.getString("user_pw"));
+                    user.setUserPw(rs.getString("userPw"));
 
                 }
 

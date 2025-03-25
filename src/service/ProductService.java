@@ -67,7 +67,7 @@ public class ProductService {
     public List<Product> searchProductDataForAdmin(){
         System.out.println("\n============== 관리자 모드입니다. ===============");
         System.out.println("\n============== 제품 검색 조건을 선택하세요. ===============");
-        System.out.println("[ 1. 제품명검색 | 2. 카테고리검색 | 3. 전체검색 ]");
+        System.out.println("[ 1. 이름 검색 | 2. 카테고리검색 | 3. 전체검색 ]");
         int selection = inputInteger(">>> ");
 
         Condition condition = Condition.ALL;
@@ -180,9 +180,15 @@ public class ProductService {
                     System.out.println("========= 잘못 입력하셨습니다=======");
                 }
                 else{
-                    int count = inputInteger("### 제품 수량: ");
-                    ItemCart temp = new ItemCart(option, count);
-                    itemList.add(temp);
+                    for (Product product : productList) {
+                        if(product.getProductId() == option){
+                            Product pr = product;
+                            int count = inputInteger("### 제품 수량: ");
+                            ItemCart temp = new ItemCart(option, count, pr.getPrice());
+                            itemList.add(temp);
+                        }
+                    }
+
                 }
             }
         }
