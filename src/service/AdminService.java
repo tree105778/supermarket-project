@@ -207,8 +207,9 @@ public class AdminService {
                         else{
                             act += "N";
                         }
+                        String phonenumber = "#".repeat(7) + customer.getPhoneNumber().substring(7);
                         System.out.printf("### 회원명: %s, 전화번호: %s, 포인트: %d, 탈퇴 여부: %s\n",
-                                customer.getUserName(), customer.getPhoneNumber(), customer.getUserPoint(), act);
+                                customer.getUserName(), phonenumber, customer.getUserPoint(), act);
                     }
                 }
                 if (!isExist) {
