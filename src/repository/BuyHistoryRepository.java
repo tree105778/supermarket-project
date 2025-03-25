@@ -67,4 +67,6 @@ public class BuyHistoryRepository {
         return result;
     }
 
+
+
 }

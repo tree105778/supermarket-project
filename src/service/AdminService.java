@@ -22,7 +22,7 @@ public class AdminService {
 
     public static void startAdminScreen() {
         System.out.println("================= 관리자 계정입니다. =================");
-        System.out.println("### 1. 제품 관리");
+        System.out.println("### 1. 제품 등록");
         System.out.println("### 2. 제품 삭제");
         System.out.println("### 3. 카테고리 등록");
         System.out.println("### 4. 제품 조회");
