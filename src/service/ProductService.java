@@ -31,7 +31,7 @@ public class ProductService {
         productRepository.addProductData(productName, category_name, stockNum, productPrice, isExist);
 
 
-        System.out.printf("\n### [%s] 정보가 정상적으로 추가되었습니다.", productName);
+        System.out.printf("\n### [%s] 정보가 정상적으로 추가되었습니다.\n", productName);
     }
 
     public void deleteProductData() {

@@ -68,7 +68,7 @@ public class CustomerService {
             return;
         }
 
-        System.out.printf("===================== 회원 목록 =====================");
+        System.out.printf("===================== 회원 목록 =====================\n");
         for (CustomerDTO user : users) {
             System.out.printf("### 회원명: %s, 전화번호: %s, 포인트: %d\n",
                     user.getUserName(), user.getPhoneNumber(), user.getUserPoint());
