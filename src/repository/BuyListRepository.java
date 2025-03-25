@@ -25,7 +25,7 @@ public class BuyListRepository {
     }
 
     public int getBuyHistoryTotalPrice(int buy_id, Product product) {
-        String sql = "SELECT * FROM WHERE BUY_ID = " + buy_id;
+        String sql = "SELECT * FROM BUY_LIST WHERE BUY_ID = " + buy_id;
         int total = 0;
         try (Connection conn = DBConnectionManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -35,7 +35,7 @@ public class BuyListRepository {
                         (rs.getInt("count") - rs.getInt("refund_count")));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return total;
     }
@@ -49,7 +49,7 @@ public class BuyListRepository {
             pstmt.setInt(2, buyId);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }
