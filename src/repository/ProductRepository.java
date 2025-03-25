@@ -13,12 +13,13 @@ import java.util.List;
 
 public class ProductRepository {
 
-    CategoryRepository categoryRepository;
+    CategoryRepository categoryRepository = new CategoryRepository();
 
     // admin이 true면 관리자, false면 고객입장 -> 삭제된 물품의 검색 포함 여부
     public List<Product> searchProductList(Condition condition, String keyword, boolean admin){
 
         List<Product> products = new ArrayList<>();
+        int categoryId = categoryRepository.getCategoryId(keyword);
         String sql = "SELECT * FROM product";
         // 고객용 -> 활성화된 제품만 확인
         if(!admin) {
@@ -45,7 +46,7 @@ public class ProductRepository {
             PreparedStatement pstmt = conn.prepareStatement(sql);
         ){
             if(condition != Condition.ALL){
-                pstmt.setString(1, keyword);
+                pstmt.setInt(1, categoryId);
             }
 
             ResultSet rs = pstmt.executeQuery();
@@ -74,6 +75,7 @@ public class ProductRepository {
     public void addProductData(String productName, String categoryName, int stock, int productPrice, boolean isExist){
 
         int categoryId = categoryRepository.getCategoryId(categoryName);
+        System.out.println(categoryId);
         String sql = "";
 
         // 이미 존재하는 제품인 경우
@@ -84,7 +86,7 @@ public class ProductRepository {
         // 새로운 제품을 등록하는 경우
         else{
             sql += "INSERT INTO product VALUES (product_seq.NEXTVAL, " +
-                    "?, ?, ?, 'Y', ?";
+                    "?, ?, ?, 'Y', ?)";
         }
 
         try(Connection conn = DBConnectionManager.getConnection();
@@ -110,7 +112,7 @@ public class ProductRepository {
 
     public Product deleteProductData(int product_id){
         String sql = "UPDATE product SET active = 'N' WHERE product_id = ?";
-        String sear = "SELECT * FROM movies WHERE product_id = ?";
+        String sear = "SELECT * FROM product WHERE product_id = ?";
 
         Product temp = new Product(0, "", 0, 0, 0, false);
 
@@ -164,5 +166,27 @@ public class ProductRepository {
         return result;
     }
 
+
+    // 구매, 환불 시 재고 업데이트 메소드
+    // count -> 변화하는 재고량, abs -> true면 구매 -> 재고+, false면 환불 -> 재고 -
+    public void updateProductStock(int product_id, int count, boolean abs){
+        String sql = "";
+        if(abs){
+            sql += "UPDATE product SET stock = stock + ? WHERE product_id = ?";
+        }
+        else{
+            sql += "UPDATE product SET stock = stock - ? WHERE product_id = ? AND stock > 0";
+        }
+
+
+        try(Connection conn = DBConnectionManager.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+        ){
+            pstmt.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
