@@ -1,11 +1,17 @@
 package domain;
 
 public class CustomerDTO {
-    private String userId;
+    private int userId;
     private String userName;
+    private String phoneNumber;
     private int totalPay;
     private int userPoint;
-    private String phoneNumber;
+
+    @Override
+    public String toString() {
+        return "회원 이름: " + userName + '\'' +
+                ", 휴대폰번호: " + phoneNumber;
+    }
 
     public CustomerDTO(String userName, int totalPay, int userPoint, String phoneNumber) {
         this.userName = userName;
@@ -14,11 +20,11 @@ public class CustomerDTO {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 

@@ -3,12 +3,19 @@ package domain;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class buyHistory {
+public class BuyHistory {
     private int buyId;
     private LocalDateTime buyTime;
-    private Customer user;
+    private int userId;
     private int totalPrice;
-    private List<buyList> buylist;
+    private List<BuyList> buylist;
+
+    public BuyHistory(int buyId, LocalDateTime buyTime, int userId, int totalPrice) {
+        this.buyId = buyId;
+        this.buyTime = buyTime;
+        this.userId = userId;
+        this.totalPrice = totalPrice;
+    }
 
     public int getBuyId() {
         return buyId;
@@ -26,12 +33,12 @@ public class buyHistory {
         this.buyTime = buyTime;
     }
 
-    public Customer getUser() {
-        return user;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser(Customer user) {
-        this.user = user;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public int getTotalPrice() {
@@ -46,7 +53,7 @@ public class buyHistory {
     public String toString() {
          return "구매번호: " + buyId +
                 ", 총 구매 금액: " + totalPrice +
-                ", 고객ID: " + user.getUserId() +
+                ", 고객ID: " + userId +
                 ", 구매 시각: " + buyTime;
     }
 }

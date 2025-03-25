@@ -15,6 +15,7 @@ public class CustomerService {
     private final CustomerRepository customerRepository = new CustomerRepository();
     private final ProductService productService = new ProductService();
     private final AdminService adminService = new AdminService();
+    private final PurchaseService purchaseService = new PurchaseService();
 
     public void start() {
         while (true) {
@@ -52,7 +53,7 @@ public class CustomerService {
         System.out.println("\n====== 회원 가입을 진행합니다. ======");
 
         String name = inputString("# 회원명: ");
-        String phone = inputString("# 전화번호: ");
+        String phone = inputString("# 전화번호('-'없이 입력): ");
         String pw = inputString("# 비밀번호: ");
 
         customerRepository.addUser(name, phone, pw);
@@ -68,7 +69,7 @@ public class CustomerService {
             return;
         }
 
-        System.out.printf("===================== 회원 목록 =====================");
+        System.out.printf("===================== 회원 목록 =====================\n");
         for (CustomerDTO user : users) {
             String phoneNumber = "#".repeat(7) + user.getPhoneNumber().substring(7);
             System.out.printf("### 회원명: %s, 전화번호: %s, 포인트: %d\n",
@@ -107,6 +108,6 @@ public class CustomerService {
         int usernum = inputInteger("### 위에 조회된 회원 중 번호를 선택하세요 >> ");
         if (usernum < 0 || usernum >= users.size()) return;
         makeLine();
-        PurchaseService.startPurchaseScreen(users.get(usernum));
+        purchaseService.startPurchaseScreen(users.get(usernum));
     }
 }

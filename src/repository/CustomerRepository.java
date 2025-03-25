@@ -86,8 +86,8 @@ public class CustomerRepository {
                         rs.getInt("user_point"),
                         rs.getString("phone_number")
                 );
-                customer.setUserId(rs.getString("user_id"));
-                customer.setUserId(rs.getString("user_id"));
+                customer.setUserId(rs.getInt("user_id"));
+                customer.setUserId(rs.getInt("user_id"));
                 customers.add(customer);
 
             }
