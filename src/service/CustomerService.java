@@ -82,7 +82,7 @@ public class CustomerService {
             System.out.println("현재 조회된 제품이 없습니다.");
             return;
         }
-        System.out.printf("===================== 제품 목록 =====================");
+        System.out.println("===================== 제품 목록 =====================");
         for (Product product : products) {
             System.out.println(product);
         }

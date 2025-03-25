@@ -45,8 +45,10 @@ public class ProductRepository {
         try(Connection conn = DBConnectionManager.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql);
         ){
-            if(condition != Condition.ALL){
+            if(condition == Condition.CATEGORY){
                 pstmt.setInt(1, categoryId);
+            } else if (condition == Condition.NAME) {
+                pstmt.setString(1, keyword);
             }
 
             ResultSet rs = pstmt.executeQuery();
