@@ -1,9 +1,6 @@
 package service;
 
-import domain.BuyHistory;
-import domain.BuyList;
-import domain.CustomerDTO;
-import domain.ItemCart;
+import domain.*;
 import repository.CustomerRepository;
 import repository.OrderRepository;
 
@@ -69,16 +66,25 @@ public class PurchaseService {
 
         List<BuyList> buyLists = orderRepository.getBuyListByBuyId(buyId);
 
-        for (BuyList buyList : buyLists) {
-            System.out.printf("구매한 상품 번호: %d, 상품 이름: %s, 개수: %d\n"
-                    ,buyList.getProduct().getProductId() ,buyList.getProduct().getProductName(), buyList.getCount());
-        }
+        int totalRefundPrice = 0;
+
         while (true) {
+            for (int i = 0; i < buyLists.size(); i++) {
+                System.out.printf("%d. 상품 이름: %s, 개수: %d\n"
+                        , i, buyLists.get(i).getProduct().getProductId(),
+                        buyLists.get(i).getProduct().getProductName(),
+                        buyLists.get(i).getCount());
+            }
             String productId = inputString("환불할 상품의 번호를 입력해주세요(종료하려면 q를 눌러주세요!): ");
-            int refundCount = inputInteger("환불할 상품의 개수를 입력하세요: ");
             if (productId.equals("q")) break;
-//            refundProcess();
+            int integerProductId = Integer.parseInt(productId);
+            int refundCount = inputInteger("환불할 상품의 개수를 입력하세요: ");
+            Product product = buyLists.get(integerProductId).getProduct();
+            if (refundCount > buyLists.get(integerProductId).getCount()) break;
+            totalRefundPrice += product.getPrice() * refundCount;
+            orderRepository.refundProcess(buyId, integerProductId, refundCount);
         }
+        orderRepository.updateTotalPriceInBuyHistory(totalRefundPrice);
     }
 
     private void showProductListAndPurChase(CustomerDTO customer) {

@@ -13,6 +13,7 @@ import java.util.List;
 
 public class OrderRepository {
     private final CustomerRepository customerRepository = new CustomerRepository();
+    private final ProductRepository productRepository = new ProductRepository();
     private Connection conn;
 
     public void purchaseProcess(int userId, List<ItemCart> itemCarts) {
@@ -54,7 +55,15 @@ public class OrderRepository {
     }
 
     public void refundProcess(int buyId, int productId, int refundCount) {
+        try {
+            conn = DBConnectionManager.getConnection();
+            conn.setAutoCommit(false);
 
+            refundBuyList(conn, buyId, productId, refundCount);
+            productRepository.updateProductStock(conn, productId, refundCount, true);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private int getBuyId(Connection conn) {
@@ -63,7 +72,7 @@ public class OrderRepository {
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             ResultSet rs = pstmt.executeQuery();
             rs.next();
-            return rs.getInt("BUY_HISTORY_SEQ.CURRVAL");
+            return rs.getInt("CURRVAL");
         } catch (SQLException e) {
             return -1;
         }
@@ -83,17 +92,33 @@ public class OrderRepository {
         }
     }
 
-    private void refundBuyList(int buyId, int refundCount) {
-        String sql = "UPDATE BUY_LIST SET refund_count = ? WHERE BUY_ID = ?";
+    private void refundBuyList(
+            Connection conn, int buyId, int productId, int refundCount) throws SQLException {
+        String sql = "UPDATE BUY_LIST " +
+                "SET refund_count = refund_count + ? " +
+                "WHERE BUY_ID = ? AND PRODUCT_ID = ? ";
 
-        try (Connection conn = DBConnectionManager.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, refundCount);
             pstmt.setInt(2, buyId);
+            pstmt.setInt(3, productId);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new SQLException(e);
         }
+    }
+
+    public void updateTotalPriceInBuyHistory(int totalRefundPrice) {
+        String sql = "UPDATE BUY_HISTORY " +
+                "SET total_price = total_price - " + totalRefundPrice;
+
+        try (Connection connection = DBConnectionManager.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     private int getBuyHistoryTotalPrice(int buy_id, Product product) {

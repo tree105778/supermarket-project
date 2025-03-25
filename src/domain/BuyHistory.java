@@ -17,6 +17,9 @@ public class BuyHistory {
         this.totalPrice = totalPrice;
     }
 
+    public BuyHistory() {
+    }
+
     public int getBuyId() {
         return buyId;
     }

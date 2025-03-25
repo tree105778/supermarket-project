@@ -105,7 +105,7 @@ public class CustomerService {
                     phoneNumber,
                     users.get(i).getUserPoint());
         }
-        int usernum = inputInteger("### 위에 조회된 회원 중 번호를 선택하세요 >> ");
+        int usernum = inputInteger("### 위에 조회된 회원 중 번호를 선택하세요 >> ") - 1;
         if (usernum < 0 || usernum >= users.size()) return;
         makeLine();
         purchaseService.startPurchaseScreen(users.get(usernum));
