@@ -52,7 +52,7 @@ public class CustomerService {
         System.out.println("\n====== 회원 가입을 진행합니다. ======");
 
         String name = inputString("# 회원명: ");
-        String phone = inputString("# 전화번호: ");
+        String phone = inputString("# 전화번호('-'없이 입력): ");
         String pw = inputString("# 비밀번호: ");
 
         customerRepository.addUser(name, phone, pw);
