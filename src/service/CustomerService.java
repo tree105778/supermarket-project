@@ -14,6 +14,7 @@ public class CustomerService {
 
     private final CustomerRepository customerRepository = new CustomerRepository();
     private final ProductService productService = new ProductService();
+    private final AdminService adminService = new AdminService();
 
     public void start() {
         while (true) {
@@ -43,36 +44,7 @@ public class CustomerService {
     }
 
     private void connectToAdmin() {
-        while (true) {
-            System.out.println("\n===== [ 관리자 모드 ] =====");
-            System.out.println("1. 전체 회원 조회");
-            System.out.println("2. 뒤로 가기");
-            int selection = inputInteger(">>> ");
-
-            switch (selection) {
-                case 1:
-                    List<Customer> customers = customerRepository.showAllUsers();
-                    if (customers.isEmpty()) {
-                        System.out.println("등록된 회원이 없습니다.");
-                    } else {
-                        System.out.println("\n[ 전체 회원 목록 ]");
-                        for (Customer c : customers) {
-                            System.out.println("---------------------------");
-                            System.out.println("ID: " + c.getUserId());
-                            System.out.println("이름: " + c.getUserName());
-                            System.out.println("전화번호: " + c.getPhoneNumber());
-                            System.out.println("총 결제금액: " + c.getTotalPay());
-                            System.out.println("포인트: " + c.getUserPoint());
-                            System.out.println("활성화 상태: " + (c.isActive() ? "활성" : "비활성"));
-                        }
-                    }
-                    break;
-                case 2:
-                    return;
-                default:
-                    System.out.println("# 메뉴를 다시 선택해주세요.");
-            }
-        }
+        adminService.startAdminUI();
     }
 
     private void register() {
