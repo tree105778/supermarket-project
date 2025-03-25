@@ -1,12 +1,13 @@
 package service;
 
+import repository.CustomerRepository;
 import ui.CommonUI;
 
 import static ui.CommonUI.inputInteger;
 import static ui.CommonUI.startCustomerScreen;
 
 public class CustomerService {
-
+    private final CustomerRepository customerRepository = new CustomerRepository();
     public void start() {
         while (true) {
             startCustomerScreen();
