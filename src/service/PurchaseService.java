@@ -51,8 +51,15 @@ public class PurchaseService {
                     + ", 주문날짜: " + buyHistory.getBuyTime());
         }
         int buyId = inputInteger("### 환불할 주문 번호를 입력하세요 >> ");
-        if (!buyHistories.contains(buyId)) {
-            System.out.println("# 주문 번호를 잘못 입력하셨습니다 다시 입력해주세요");
+        boolean flag = false;
+        for (BuyHistory buyHistory : buyHistories) {
+            if (buyHistory.getBuyId() == buyId) {
+                flag = true;
+                break;
+            }
+        }
+        if (!flag) {
+            System.out.println("환불할 주문 번호를 잘못 입력하셨습니다. 다시 입력해주세요!");
             return;
         }
 
