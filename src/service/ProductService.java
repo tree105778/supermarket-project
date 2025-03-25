@@ -12,7 +12,7 @@ import static ui.CommonUI.inputString;
 
 public class ProductService {
 
-    ProductRepository productRepository;
+    ProductRepository productRepository = new ProductRepository();
 
     public void insertProductData() {
         System.out.println("\n ====== 새로운 제품을 추가합니다. ======");

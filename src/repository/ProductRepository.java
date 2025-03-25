@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ProductRepository {
 
-    CategoryRepository categoryRepository;
+    CategoryRepository categoryRepository = new CategoryRepository();
 
     // admin이 true면 관리자, false면 고객입장 -> 삭제된 물품의 검색 포함 여부
     public List<Product> searchProductList(Condition condition, String keyword, boolean admin){
@@ -74,6 +74,7 @@ public class ProductRepository {
     public void addProductData(String productName, String categoryName, int stock, int productPrice, boolean isExist){
 
         int categoryId = categoryRepository.getCategoryId(categoryName);
+        System.out.println(categoryId);
         String sql = "";
 
         // 이미 존재하는 제품인 경우
@@ -84,7 +85,7 @@ public class ProductRepository {
         // 새로운 제품을 등록하는 경우
         else{
             sql += "INSERT INTO product VALUES (product_seq.NEXTVAL, " +
-                    "?, ?, ?, 'Y', ?";
+                    "?, ?, ?, 'Y', ?)";
         }
 
         try(Connection conn = DBConnectionManager.getConnection();
@@ -110,7 +111,7 @@ public class ProductRepository {
 
     public Product deleteProductData(int product_id){
         String sql = "UPDATE product SET active = 'N' WHERE product_id = ?";
-        String sear = "SELECT * FROM movies WHERE product_id = ?";
+        String sear = "SELECT * FROM product WHERE product_id = ?";
 
         Product temp = new Product(0, "", 0, 0, 0, false);
 

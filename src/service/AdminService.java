@@ -9,9 +9,9 @@ import static ui.CommonUI.*;
 
 public class AdminService {
 
-    AdminRepository adminRepository;
-    ProductService productService;
-    BuyHistoryRepository buyHistoryRepository;
+    AdminRepository adminRepository = new AdminRepository();
+    ProductService productService = new ProductService();
+    BuyHistoryRepository buyHistoryRepository = new BuyHistoryRepository();
 
     public static void startAdminScreen() {
         System.out.println("================= 관리자 계정입니다. =================");
@@ -46,7 +46,7 @@ public class AdminService {
                     showProfit();
                     break;
                 case 6:
-                    startCustomerScreen();
+                    //customerService.start();
                     break;
                 default:
                     System.out.println("# 메뉴를 다시 입력하세요!");
