@@ -6,8 +6,7 @@ import repository.OrderRepository;
 
 import java.util.List;
 
-import static ui.CommonUI.inputInteger;
-import static ui.CommonUI.inputString;
+import static ui.CommonUI.*;
 
 public class PurchaseService {
     private final ProductService productService = new ProductService();
@@ -19,6 +18,7 @@ public class PurchaseService {
             System.out.println("==================== 제품 구매 서비스 ====================");
             System.out.println("### 1. 제품 목록 조회 및 장바구니 담기");
             System.out.println("### 2. 환불");
+            System.out.println("### 3. 이전 화면");
 
             int selectNum = inputInteger(">>> ");
 
@@ -29,6 +29,8 @@ public class PurchaseService {
                 case 2:
                     refundProcess(customer);
                     break;
+                case 3:
+                    return;
                 default:
                     System.out.println("메뉴 번호를 다시 입력해주세요.");
             }
@@ -36,17 +38,7 @@ public class PurchaseService {
     }
 
     private void refundProcess(CustomerDTO customer) {
-//        String username = inputString("### 회원 이름을 입력하세요: ");
-////        List<CustomerDTO> users = customerRepository.searchByUserName(username);
-////        if (users.isEmpty()) {
-////            System.out.println("### 조건을 만족하는 회원 이름이 없습니다. 다시 입력해주세요.");
-////            return;
-////        }
-////        for (int i = 0; i < users.size(); i++) {
-////            System.out.print(i + ". ");
-////            System.out.println(users.get(i));
-////        }
-////        int userIndex = inputInteger("### 회원 번호를 입력해주세요 >> ");
+
         List<BuyHistory> buyHistories =
                 orderRepository.getBuyHistoryByUserId(customer.getUserId());
         if (buyHistories.isEmpty()) {
