@@ -1,6 +1,7 @@
 package service;
 
 import common.Condition;
+import domain.ItemCart;
 import domain.Product;
 import repository.ProductRepository;
 
@@ -130,10 +131,10 @@ public class ProductService {
     }
 
     // 관리자면 true, 고객이면 false
-    public void showSearchProductData(boolean admin) {
+    public List<Product> showSearchProductData(boolean admin) {
 
+        List<Product> products = new ArrayList<>();
         try {
-            List<Product> products = new ArrayList<>();
             if (admin) {
                 products = searchProductDataForAdmin();
             }
@@ -157,10 +158,36 @@ public class ProductService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
+        return products;
     }
 
+    // 장바구니 메소드
+    public List<ItemCart> shopProductCart(){
+        List<ItemCart> itemList = new ArrayList<>();
+        List<Product> productList = showSearchProductData(false);
+        List<Integer> productID = new ArrayList<>();
+        for (Product product : productList) {
+            productID.add(product.getProductId());
+        }
+        System.out.println("### 모두 장바구니에 담으셨다면 -1을 입력하세요! ");
+        while(true){
+            int option = inputInteger("### 제품 번호: ");
+            if(option == -1){
+                break;
+            }
+            else{
+                if(!productID.contains(option)){
+                    System.out.println("========= 잘못 입력하셨습니다=======");
+                }
+                else{
+                    int count = inputInteger("### 제품 수량: ");
+                    ItemCart temp = new ItemCart(option, count);
+                    itemList.add(temp);
+                }
+            }
+        }
+        return itemList;
+    }
 
 
 }

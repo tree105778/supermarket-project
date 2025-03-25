@@ -170,7 +170,7 @@ public class ProductRepository {
 
 
     // 구매, 환불 시 재고 업데이트 메소드
-    // count -> 변화하는 재고량, abs -> true면 구매 -> 재고+, false면 환불 -> 재고 -
+    // count -> 변화하는 재고량, abs -> true면 환불 -> 재고+, false면 구매 -> 재고 -
     public void updateProductStock(int product_id, int count, boolean abs){
         String sql = "";
         if(abs){
