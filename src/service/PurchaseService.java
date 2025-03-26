@@ -18,7 +18,7 @@ public class PurchaseService {
             System.out.println("==================== 제품 구매 서비스 ====================");
             System.out.println("### 1. 제품 목록 조회 및 장바구니 담기");
             System.out.println("### 2. 환불");
-            System.out.println("### 3. 이전 화면");
+            System.out.println("### 3. 구매 종료");
 
             int selectNum = inputInteger(">>> ");
 
@@ -88,7 +88,7 @@ public class PurchaseService {
 
     private void showProductListAndPurChase(CustomerDTO customer) {
         List<ItemCart> itemCarts = productService.shopProductCart();
-        String yes = inputString("### 구매를 계속 진행하시겠습니까? (Y/n): ");
+        String yes = inputString("### 구매를 완료하시겠습니까? (Y/N): ");
         if (!yes.equals("Y")) {
             System.out.println("### 구매가 취소 되었습니다.");
             return;

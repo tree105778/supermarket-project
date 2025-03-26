@@ -199,7 +199,7 @@ public class ProductService {
             }
             else{
                 if(!productID.contains(option)){
-                    System.out.println("========= 잘못 입력하셨습니다=======");
+                    System.out.println("========= 잘못 입력하셨습니다 =======");
                 }
                 else{
                     for (Product product : productList) {
