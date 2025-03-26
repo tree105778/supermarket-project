@@ -19,7 +19,6 @@ public class CustomerService {
 
     private final String pwAdmin = "0000";
 
-
     public void start() {
         while (true) {
             startCustomerScreen();
