@@ -53,7 +53,17 @@ public class CustomerService {
         System.out.println("\n====== 회원 가입을 진행합니다. ======");
 
         String name = inputString("# 회원명: ");
-        String phone = inputString("# 전화번호('-'없이 입력): ");
+        String phone;
+        while (true) {
+            phone = inputString("# 전화번호(예: xxx-xxxx-xxxx): ").trim();
+
+            // 하이픈 포함 여부 + 숫자-숫자-숫자 형식 확인 (정규표현식 사용)
+            if (phone.matches("\\d{2,3}-\\d{3,4}-\\d{4}")) {
+                break;
+            }
+            System.out.println("잘못된 형식입니다. 예: xxx-xxxx-xxxx");
+        }
+
         String pw = inputString("# 비밀번호: ");
 
         customerRepository.addUser(name, phone, pw);
