@@ -69,14 +69,14 @@ public class PurchaseService {
         while (true) {
             for (int i = 0; i < buyLists.size(); i++) {
                 System.out.printf("%d. 상품 이름: %s, 개수: %d\n"
-                        , i + 1, buyLists.get(i).getProduct().getProductId(),
+                        , i + 1,
                         buyLists.get(i).getProduct().getProductName(),
                         buyLists.get(i).getCount());
             }
             String productId = inputString("### 환불할 상품의 번호를 입력해주세요(종료하려면 q를 눌러주세요!): ");
             if (productId.equals("q")) break;
-            int integerProductId = Integer.parseInt(productId);
-            if (integerProductId < 0 || integerProductId >= buyLists.size()) {
+            int integerProductId = Integer.parseInt(productId) - 1;
+            if (integerProductId < 0 || integerProductId > buyLists.size()) {
                 System.out.println("### 잘못된 번호입니다. 다시 입력해주세요");
                 continue;
             }
@@ -87,7 +87,7 @@ public class PurchaseService {
             buyList.setCount(buyList.getCount() - refundCount);
             totalRefundPrice += product.getPrice() * refundCount;
             boolean isRefund = orderRepository.
-                    refundProcess(buyId, integerProductId, refundCount);
+                    refundProcess(buyId, product.getProductId(), refundCount);
             if (isRefund) System.out.println("### 환불 절차가 성공했습니다.");
             else System.out.println("### 환불 절차가 실패했습니다.");
         }

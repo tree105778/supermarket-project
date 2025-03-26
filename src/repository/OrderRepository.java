@@ -33,7 +33,7 @@ public class OrderRepository {
             }
             for (ItemCart itemCart : itemCarts) {
                 buyListPurchase(conn, buyId, itemCart);
-                updateProductStock(conn, itemCart);
+                updateProductStock(conn, itemCart, false);
             }
             conn.commit();
         } catch (SQLException e) {
@@ -57,10 +57,18 @@ public class OrderRepository {
             return true;
         }
     }
+        // abs true면 환불, false면 구매
+    private void updateProductStock(Connection conn, ItemCart itemCart, boolean abs) throws SQLException {
+        String sql = "";
 
-    private void updateProductStock(Connection conn, ItemCart itemCart) throws SQLException {
-        String sql = "UPDATE PRODUCT " +
-                "SET stock = stock - ? WHERE PRODUCT_ID = ?";
+        if (!abs) {
+            sql +=   "UPDATE PRODUCT " +
+                    "SET stock = stock - ? WHERE PRODUCT_ID = ?";
+        }
+        else{
+            sql +=   "UPDATE PRODUCT " +
+                    "SET stock = stock + ? WHERE PRODUCT_ID = ?";
+        }
 
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, itemCart.getCount());
@@ -72,9 +80,11 @@ public class OrderRepository {
         try {
             conn = DBConnectionManager.getConnection();
             conn.setAutoCommit(false);
+            System.out.println("refundProcess");
 
             refundBuyList(conn, buyId, productId, refundCount);
-            productRepository.updateProductStock(conn, productId, refundCount, true);
+            ItemCart temp = new ItemCart(productId, refundCount, 0);
+            updateProductStock(conn, temp, true);
             conn.commit();
             return true;
         } catch (SQLException e) {
@@ -134,8 +144,10 @@ public class OrderRepository {
             pstmt.setInt(1, refundCount);
             pstmt.setInt(2, buyId);
             pstmt.setInt(3, productId);
+            System.out.println("refundBuyList");
             pstmt.executeUpdate();
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new SQLException(e);
         }
     }
