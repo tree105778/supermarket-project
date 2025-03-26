@@ -51,9 +51,10 @@ public class PurchaseService {
         }
         int buyId = inputInteger("### 환불할 주문 번호를 입력하세요 >> ");
         boolean flag = false;
+        int userID = 0;
         for (BuyHistory buyHistory : buyHistories) {
             if (buyHistory.getBuyId() == buyId) {
-                flag = true;
+                flag = true; userID = buyHistory.getUserId();
                 break;
             }
         }
@@ -93,6 +94,7 @@ public class PurchaseService {
             else System.out.println("### 환불 절차가 실패했습니다.");
         }
         orderRepository.updateTotalPriceInBuyHistory(totalRefundPrice);
+        customerRepository.updateCustomerTotalPay(totalRefundPrice,userID ,true);
     }
 
     private void showProductListAndPurChase(CustomerDTO customer) {
@@ -108,7 +110,13 @@ public class PurchaseService {
         }
         boolean isPurchase =
                 orderRepository.purchaseProcess(customer.getUserId(), itemCarts);
-        if (isPurchase) System.out.println("### 구매가 성공적으로 진행되었습니다.");
+        if (isPurchase) {
+            System.out.println("### 구매가 성공적으로 진행되었습니다.");
+            int totalPrice = itemCarts.stream()
+                    .mapToInt(ic -> ic.getCount() * ic.getPrice())
+                    .sum();
+            customerRepository.updateCustomerTotalPay(totalPrice, customer.getUserId(), false);
+        }
         else System.out.println("### 구매가 실패했습니다.");
     }
 }

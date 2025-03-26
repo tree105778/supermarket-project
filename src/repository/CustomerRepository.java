@@ -127,4 +127,25 @@ public class CustomerRepository {
             }
             return user;
     }
+
+    // abs true면 환불이라 + , false면 구매라 -
+    public void updateCustomerTotalPay(int newTotalPrice, int user_id, boolean abs){
+        String sql = "";
+        if(abs){
+            sql += "UPDATE customer SET total_pay = total_pay + ? WHERE user_id = ?";
+        }
+        else{
+            sql += "UPDATE customer SET total_pay = total_pay - ? WHERE user_id = ?";
+        }
+
+        try(    Connection conn = DBConnectionManager.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setInt(1, newTotalPrice);
+            pstmt.setInt(2, user_id);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
