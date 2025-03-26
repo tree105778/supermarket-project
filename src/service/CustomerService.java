@@ -52,10 +52,11 @@ public class CustomerService {
     private void deleteUU() {
         findUser();
         String name = inputString("### 탈퇴할 회원 이름: ");
-        String phNum = inputString("### 전화번호: ");
+        String phNum = inputString("### 전화번호(예: xxx-xxxx-xxxx): ");
 
         String pw = inputString("### 비밀번호 입력: ");
         customerRepository.deleteUser(name, pw);
+        System.out.println("탈퇴에 성공했습니다.");
     }
 
     private void privacyAdmin(){
