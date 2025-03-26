@@ -89,11 +89,17 @@ public class PurchaseService {
     private void showProductListAndPurChase(CustomerDTO customer) {
         List<ItemCart> itemCarts = productService.shopProductCart();
         String yes = inputString("### 구매를 계속 진행하시겠습니까? (Y/n): ");
-        if (!yes.equals("Y")) return;
-        if (itemCarts.isEmpty()) {
-            System.out.println("장바구니가 비었습니다. 구매를 진행할 수 없습니다.");
+        if (!yes.equals("Y")) {
+            System.out.println("### 구매가 취소 되었습니다.");
             return;
         }
-        orderRepository.purchaseProcess(customer.getUserId(), itemCarts);
+        if (itemCarts.isEmpty()) {
+            System.out.println("### 장바구니가 비었습니다. 구매를 진행할 수 없습니다.");
+            return;
+        }
+        boolean isPurchase =
+                orderRepository.purchaseProcess(customer.getUserId(), itemCarts);
+        if (isPurchase) System.out.println("### 구매가 성공적으로 진행되었습니다.");
+        else System.out.println("### 구매가 실패했습니다.");
     }
 }

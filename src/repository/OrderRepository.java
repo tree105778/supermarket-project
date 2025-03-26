@@ -16,7 +16,7 @@ public class OrderRepository {
     private final ProductRepository productRepository = new ProductRepository();
     private Connection conn;
 
-    public void purchaseProcess(int userId, List<ItemCart> itemCarts) {
+    public boolean purchaseProcess(int userId, List<ItemCart> itemCarts) {
         try {
             conn = DBConnectionManager.getConnection();
             conn.setAutoCommit(false);
@@ -29,10 +29,11 @@ public class OrderRepository {
             int buyId = getBuyId(conn);
             if (buyId == -1) {
                 System.out.println("구매에 실패했습니다 다시 시도해주세요.");
-                return;
+                return false;
             }
             for (ItemCart itemCart : itemCarts) {
                 buyListPurchase(conn, buyId, itemCart);
+                updateProductStock(conn, itemCart);
             }
             conn.commit();
         } catch (SQLException e) {
@@ -41,6 +42,8 @@ public class OrderRepository {
                 conn.rollback();
             } catch (SQLException ex) {
                 System.out.println("롤백에 실패했습니다");
+            } finally {
+                return false;
             }
         } finally {
             try {
@@ -51,7 +54,18 @@ public class OrderRepository {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+            return true;
         }
+    }
+
+    private void updateProductStock(Connection conn, ItemCart itemCart) throws SQLException {
+        String sql = "UPDATE PRODUCT " +
+                "SET stock = stock - ? WHERE PRODUCT_ID = ?";
+
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1, itemCart.getCount());
+        pstmt.setInt(2, itemCart.getProductId());
+        pstmt.executeUpdate();
     }
 
     public void refundProcess(int buyId, int productId, int refundCount) {
