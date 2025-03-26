@@ -38,7 +38,6 @@ public class PurchaseService {
     }
 
     private void refundProcess(CustomerDTO customer) {
-
         List<BuyHistory> buyHistories =
                 orderRepository.getBuyHistoryByUserId(customer.getUserId());
         if (buyHistories.isEmpty()) {
@@ -70,18 +69,31 @@ public class PurchaseService {
         while (true) {
             for (int i = 0; i < buyLists.size(); i++) {
                 System.out.printf("%d. 상품 이름: %s, 개수: %d\n"
+<<<<<<< Updated upstream
                         , i,
+=======
+                        , i + 1, buyLists.get(i).getProduct().getProductId(),
+>>>>>>> Stashed changes
                         buyLists.get(i).getProduct().getProductName(),
                         buyLists.get(i).getCount());
             }
-            String productId = inputString("환불할 상품의 번호를 입력해주세요(종료하려면 q를 눌러주세요!): ");
+            String productId = inputString("### 환불할 상품의 번호를 입력해주세요(종료하려면 q를 눌러주세요!): ");
             if (productId.equals("q")) break;
             int integerProductId = Integer.parseInt(productId);
+            if (integerProductId < 0 || integerProductId >= buyLists.size()) {
+                System.out.println("### 잘못된 번호입니다. 다시 입력해주세요");
+                continue;
+            }
             int refundCount = inputInteger("환불할 상품의 개수를 입력하세요: ");
+            BuyList buyList = buyLists.get(integerProductId);
             Product product = buyLists.get(integerProductId).getProduct();
             if (refundCount > buyLists.get(integerProductId).getCount()) break;
+            buyList.setCount(buyList.getCount() - refundCount);
             totalRefundPrice += product.getPrice() * refundCount;
-            orderRepository.refundProcess(buyId, integerProductId, refundCount);
+            boolean isRefund = orderRepository.
+                    refundProcess(buyId, integerProductId, refundCount);
+            if (isRefund) System.out.println("### 환불 절차가 성공했습니다.");
+            else System.out.println("### 환불 절차가 실패했습니다.");
         }
         orderRepository.updateTotalPriceInBuyHistory(totalRefundPrice);
     }

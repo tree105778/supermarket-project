@@ -68,16 +68,34 @@ public class OrderRepository {
         pstmt.executeUpdate();
     }
 
-    public void refundProcess(int buyId, int productId, int refundCount) {
+    public boolean refundProcess(int buyId, int productId, int refundCount) {
         try {
             conn = DBConnectionManager.getConnection();
             conn.setAutoCommit(false);
 
             refundBuyList(conn, buyId, productId, refundCount);
             productRepository.updateProductStock(conn, productId, refundCount, true);
+            conn.commit();
+            return true;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            try {
+                System.out.println("환불 절차가 실패했습니다.");
+                conn.rollback();
+                return false;
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
+        return false;
     }
 
     private int getBuyId(Connection conn) {
@@ -155,8 +173,13 @@ public class OrderRepository {
         List<BuyList> buyLists = new ArrayList<>();
         String sql = "SELECT " +
                 "bl.buy_id, bl.product_id, bl.count, bl.refund_count, " +
+<<<<<<< Updated upstream
                 "p.product_name, p.price, p.stock, p.active, p.category_id" +
                 " FROM BUY_LIST bl " +
+=======
+                "p.product_name, p.price, p.stock, p.active, p.category_id " +
+                "FROM BUY_LIST bl " +
+>>>>>>> Stashed changes
                 "JOIN PRODUCT p ON p.product_id = bl.product_id " +
                 "WHERE buy_id = " + buyId;
 
