@@ -29,7 +29,7 @@ public class CommonUI {
 
     public static void startCustomerScreen() {
         System.out.println("===================== 환영합니다~! =====================");
-        System.out.println("### 1. 제품 구매");
+        System.out.println("### 1. 구매/환불");
         System.out.println("### 2. 제품 조회");
         System.out.println("### 3. 고객 정보 조회");
         System.out.println("### 4. 회원가입");
