@@ -137,13 +137,15 @@ public class OrderRepository {
     private void refundBuyList(
             Connection conn, int buyId, int productId, int refundCount) throws SQLException {
         String sql = "UPDATE BUY_LIST " +
-                "SET refund_count = refund_count + ? " +
+                "SET count = count - ?, " +
+                "refund_count = refund_count + ? " +
                 "WHERE BUY_ID = ? AND PRODUCT_ID = ? ";
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, refundCount);
-            pstmt.setInt(2, buyId);
-            pstmt.setInt(3, productId);
+            pstmt.setInt(2, refundCount);
+            pstmt.setInt(3, buyId);
+            pstmt.setInt(4, productId);
             System.out.println("refundBuyList");
             pstmt.executeUpdate();
         } catch (SQLException e) {

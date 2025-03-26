@@ -78,14 +78,17 @@ public class PurchaseService {
             char[] charID = productId.toCharArray();
             if (productId.equals("q")) break;
             int integerProductId = Integer.parseInt(productId) - 1;
-            if (integerProductId < 0 || integerProductId > buyLists.size() || Character.isLetter(charID[0])) {
+            if (integerProductId < 0 || integerProductId >= buyLists.size() || Character.isLetter(charID[0])) {
                 System.out.println("### 잘못된 번호입니다. 다시 입력해주세요");
                 continue;
             }
-            int refundCount = inputInteger("환불할 상품의 개수를 입력하세요: ");
+            int refundCount = inputInteger("### 환불할 상품의 개수를 입력하세요: ");
             BuyList buyList = buyLists.get(integerProductId);
             Product product = buyLists.get(integerProductId).getProduct();
-            if (refundCount > buyLists.get(integerProductId).getCount()) break;
+            if (refundCount > buyLists.get(integerProductId).getCount()) {
+                System.out.println("### 잘못된 입력입니다.");
+                break;
+            }
             buyList.setCount(buyList.getCount() - refundCount);
             totalRefundPrice += product.getPrice() * refundCount;
             boolean isRefund = orderRepository.
@@ -94,7 +97,7 @@ public class PurchaseService {
             else System.out.println("### 환불 절차가 실패했습니다.");
         }
         orderRepository.updateTotalPriceInBuyHistory(totalRefundPrice);
-        customerRepository.updateCustomerTotalPay(totalRefundPrice,userID ,true);
+        customerRepository.updateCustomerTotalPay(totalRefundPrice,userID ,false);
     }
 
     private void showProductListAndPurChase(CustomerDTO customer) {
@@ -115,7 +118,7 @@ public class PurchaseService {
             int totalPrice = itemCarts.stream()
                     .mapToInt(ic -> ic.getCount() * ic.getPrice())
                     .sum();
-            customerRepository.updateCustomerTotalPay(totalPrice, customer.getUserId(), false);
+            customerRepository.updateCustomerTotalPay(totalPrice, customer.getUserId(), true);
         }
         else System.out.println("### 구매가 실패했습니다.");
     }
