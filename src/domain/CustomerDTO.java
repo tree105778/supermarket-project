@@ -1,32 +1,28 @@
 package domain;
 
-public class Customer {
-    private static final String ADMIN_ID = "admin";
-    private static final String ADMIN_PW = "admin";
+public class CustomerDTO {
     private int userId;
     private String userName;
+    private String phoneNumber;
     private int totalPay;
     private int userPoint;
-    private String phoneNumber;
-    private boolean active;
-    private String userPw;
 
-    public Customer(int userId, String userName, int totalPay, int userPoint, String phoneNumber, boolean active, String userPw) {
-        this.userId = userId;
+    @Override
+    public String toString() {
+        return "회원 이름: " + userName + '\'' +
+                ", 휴대폰번호: " + phoneNumber;
+    }
+
+    public CustomerDTO(String userName, int totalPay, int userPoint, String phoneNumber) {
         this.userName = userName;
         this.totalPay = totalPay;
         this.userPoint = userPoint;
         this.phoneNumber = phoneNumber;
-        this.active = active;
-        this.userPw = userPw;
     }
-
-
 
     public int getUserId() {
         return userId;
     }
-
 
     public void setUserId(int userId) {
         this.userId = userId;
@@ -49,7 +45,7 @@ public class Customer {
     }
 
     public int getUserPoint() {
-        return userPoint;
+        return totalPay/100;
     }
 
     public void setUserPoint(int userPoint) {
@@ -62,21 +58,5 @@ public class Customer {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public String getUserPw() {
-        return userPw;
-    }
-
-    public void setUserPw(String userPw) {
-        this.userPw = userPw;
     }
 }
