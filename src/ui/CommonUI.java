@@ -1,13 +1,21 @@
 package ui;
 
+import java.io.Console;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class CommonUI {
     private static Scanner sc = new Scanner(System.in);
+    private static Console console = System.console();
     public static String inputString(String message) {
         System.out.print(message);
         return sc.nextLine();
+    }
+
+    public static String inputPassword(String message) {
+        System.out.print(message);
+        char[] chars = console.readPassword();
+        return new String(chars);
     }
 
     public static int inputInteger(String message) {

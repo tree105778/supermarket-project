@@ -38,6 +38,12 @@ public class PurchaseService {
     }
 
     private void refundProcess(CustomerDTO customer) {
+        String inputPw = inputString("### 비밀번호를 입력하세요 >>> ");
+        Customer user = customerRepository.getCustomerByUserId(customer.getUserId());
+        if (!user.getUserPw().equals(inputPw)) {
+            System.out.println("### 비밀번호가 올바르지 않습니다.");
+            return;
+        }
         List<BuyHistory> buyHistories =
                 orderRepository.getBuyHistoryByUserId(customer.getUserId());
         if (buyHistories.isEmpty()) {
@@ -111,6 +117,13 @@ public class PurchaseService {
             System.out.println("### 장바구니가 비었습니다. 구매를 진행할 수 없습니다.");
             return;
         }
+        String inputPw = inputString("### 비밀번호를 입력하세요 >> ");
+        Customer user = customerRepository.getCustomerByUserId(customer.getUserId());
+        if (!user.getUserPw().equals(inputPw)) {
+            System.out.println("비밀번호가 올바르지 않습니다.");
+            return;
+        }
+
         boolean isPurchase =
                 orderRepository.purchaseProcess(customer.getUserId(), itemCarts);
         if (isPurchase) {

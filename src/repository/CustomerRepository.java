@@ -98,48 +98,46 @@ public class CustomerRepository {
     }
 
 
-
     // buy_history 객체에 Customer가 있어서 user_id를 바탕으로 Customer를 리턴해주는 메소드 추가 작성
     // buy_history 객체에 Customer가 아니라 user_id를 가지게 되면, 필요없어지는 메소드
-    public Customer getCustomerByUserId(int user_id){
-            // 리턴한 Customer 객체 임의로 작성
-            Customer user = new Customer(0, "", 0,
-                    0, "", false, "");
-            String sql = "SELECT * FROM customer WHERE user_id = ?";
+    public Customer getCustomerByUserId(int user_id) {
+        // 리턴한 Customer 객체 임의로 작성
+        Customer user = new Customer(0, "", 0,
+                0, "", false, "");
+        String sql = "SELECT * FROM customer WHERE user_id = ?";
 
-            try(Connection conn = DBConnectionManager.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql);
-            ){
-                pstmt.setInt(1, user_id);
-                ResultSet rs = pstmt.executeQuery();
-                while(rs.next()){
-                    user.setUserId(user_id);
-                    user.setUserName(rs.getString("user_name"));
-                    user.setPhoneNumber(rs.getString("phone_number"));
-                    user.setTotalPay(rs.getInt("total_pay"));
-                    user.setActive(rs.getString("active").equals("Y"));
-                    user.setUserPw(rs.getString("userPw"));
+        try (Connection conn = DBConnectionManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+        ) {
+            pstmt.setInt(1, user_id);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                user.setUserId(user_id);
+                user.setUserName(rs.getString("user_name"));
+                user.setPhoneNumber(rs.getString("phone_number"));
+                user.setTotalPay(rs.getInt("total_pay"));
+                user.setActive(rs.getString("active").equals("Y"));
+                user.setUserPw(rs.getString("user_pw"));
 
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
-            return user;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 
     // abs true면 환불이라 + , false면 구매라 -
-    public void updateCustomerTotalPay(int newTotalPrice, int user_id, boolean abs){
+    public void updateCustomerTotalPay(int newTotalPrice, int user_id, boolean abs) {
         String sql = "";
-        if(abs){
+        if (abs) {
             sql += "UPDATE customer SET total_pay = total_pay + ? WHERE user_id = ?";
-        }
-        else{
+        } else {
             sql += "UPDATE customer SET total_pay = total_pay - ? WHERE user_id = ?";
         }
 
-        try(    Connection conn = DBConnectionManager.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql)){
+        try (Connection conn = DBConnectionManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, newTotalPrice);
             pstmt.setInt(2, user_id);
             pstmt.executeUpdate();
