@@ -117,7 +117,7 @@ public class CustomerRepository {
                 user.setPhoneNumber(rs.getString("phone_number"));
                 user.setTotalPay(rs.getInt("total_pay"));
                 user.setActive(rs.getString("active").equals("Y"));
-                user.setUserPw(rs.getString("userPw"));
+                user.setUserPw(rs.getString("user_pw"));
 
             }
 
