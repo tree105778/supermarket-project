@@ -71,9 +71,14 @@ public class CustomerService {
 
         System.out.printf("===================== 회원 목록 =====================\n");
         for (CustomerDTO user : users) {
-            String phoneNumber = "#".repeat(7) + user.getPhoneNumber().replace("-", "").substring(7);
-            System.out.printf("### 회원명: %s, 전화번호: %s, 포인트: %d\n",
-                    user.getUserName(), phoneNumber, user.getUserPoint());
+            String lastDigits = user.getPhoneNumber().trim();
+            if (lastDigits.contains("-")) {
+                String[] parts = lastDigits.split("-");
+                lastDigits = parts[parts.length - 1];  // 마지막 4자리만
+            }
+            System.out.printf("### 회원명: %s, 전화번호 뒷자리: %s, 포인트: %d\n",
+                    user.getUserName(), lastDigits, user.getUserPoint());
+
         }
         makeLine();
     }
@@ -98,11 +103,16 @@ public class CustomerService {
             return;
         }
         for(int i = 0; i < users.size(); i++) {
-            String phoneNumber = "#".repeat(7) + users.get(i).getPhoneNumber().replace("-", "").substring(7);
-            System.out.printf("### %d. 회원명: %s, 전화번호: %s, 포인트: %d\n",
+            String rawPhone = users.get(i).getPhoneNumber().trim();
+            String lastDigits = rawPhone;
+            if (rawPhone.contains("-")) {
+                String[] parts = rawPhone.split("-");
+                lastDigits = parts[parts.length - 1];
+            }
+            System.out.printf("### %d. 회원명: %s, 전화번호 뒷자리: %s, 포인트: %d\n",
                     i + 1,
                     users.get(i).getUserName(),
-                    phoneNumber,
+                    lastDigits,
                     users.get(i).getUserPoint());
         }
         int usernum = inputInteger("### 위에 조회된 회원 중 번호를 선택하세요 >> ") - 1;
