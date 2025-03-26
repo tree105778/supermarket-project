@@ -32,7 +32,7 @@ public class Product {
                 ", 제품 가격: " + price + "원"+
                 ", 재고 개수: " + stock + "개" +
                 ", 카테고리 번호: " + categoryId +
-                ", 삭제 여부: " + active;
+                ", 활성화 여부: " + active;
     }
 
     public int getProductId() {
