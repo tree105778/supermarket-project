@@ -2,8 +2,10 @@ package domain;
 
 public class ItemCart {
     private int productId;
-    private int count;
     private int price;
+    private Product product;
+    private int count;
+
 
 
     public ItemCart(int product_id, int count, int price) {
@@ -35,4 +37,11 @@ public class ItemCart {
     public void setPrice(int price) {
         this.price = price;
     }
+
+    public Product getProduct() {
+        return product;
+    }
+
+
+
 }
