@@ -35,17 +35,17 @@ public class BuyHistoryRepository {
         String sql = "";
         // 오늘 하루
         if(option == 1){
-            sql += "SELECT SUM(total_price) AS today_total" +
+            sql += "SELECT SUM(total_price) AS total" +
                     " FROM buy_history" +
                     " WHERE TRUNC(buy_time) = TRUNC(SYSDATE)";
         } // 최근 7일
         else if (option == 2) {
-            sql += "SELECT SUM(total_price) AS today_total" +
+            sql += "SELECT SUM(total_price) AS total" +
                     " FROM buy_history" +
                     " WHERE buy_time >= TRUNC(SYSDATE) - 6";
         }// 최근 30일
         else{
-            sql += "SELECT SUM(total_price) AS last_30_days_total" +
+            sql += "SELECT SUM(total_price) AS total" +
                     " FROM buy_history" +
                     " WHERE buy_time >= TRUNC(SYSDATE) - 29";
         }
@@ -57,7 +57,7 @@ public class BuyHistoryRepository {
 
             ResultSet rs = pstmt.executeQuery();
             while(rs.next()){
-                result += rs.getInt("total_price");
+                result += rs.getInt("total");
             }
 
 

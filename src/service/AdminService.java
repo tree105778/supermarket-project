@@ -1,7 +1,6 @@
 package service;
 
 import domain.BuyHistory;
-import domain.Category;
 import domain.Customer;
 import repository.AdminRepository;
 import repository.BuyHistoryRepository;
@@ -133,6 +132,7 @@ public class AdminService {
 
             }
             System.out.printf("\n============== %s 총 매출 ================\n", str);
+            System.out.printf("\n### 총 매출: %d원\n", profit);
 
             // 나중에
             // System.out.println("\n============== 순 수익 ===============");

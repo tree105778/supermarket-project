@@ -60,7 +60,7 @@ public class CustomerRepository {
                         rs.getInt("user_point"),
                         rs.getString("phone_number"),
                         active,
-                        rs.getString("userpw")
+                        rs.getString("user_pw")
                 );
                 customers.add(customer);
             }

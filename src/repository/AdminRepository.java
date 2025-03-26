@@ -25,8 +25,8 @@ public class AdminRepository {
                         " WHERE c.user_name = ? ORDER BY b.buy_time DESC";
 
             } else if (option == 2) {
-                sql += "SELECT * FROM buy_history WHERE MONTH(buy_time) = ? AND " +
-                        "DAY(buy_time) = ? ORDER BY buy_time DESC";
+                sql += "SELECT * FROM buy_history WHERE TO_CHAR(buy_time, 'MM') = ? AND " +
+                        "TO_CHAR(buy_time, 'DD') = ? ORDER BY buy_time DESC";
             } else if (option == 3) {
             sql += "SELECT * FROM buy_history ORDER BY buy_time DESC";
         }
