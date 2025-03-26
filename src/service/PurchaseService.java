@@ -74,9 +74,10 @@ public class PurchaseService {
                         buyLists.get(i).getCount());
             }
             String productId = inputString("### 환불할 상품의 번호를 입력해주세요(종료하려면 q를 눌러주세요!): ");
+            char[] charID = productId.toCharArray();
             if (productId.equals("q")) break;
             int integerProductId = Integer.parseInt(productId) - 1;
-            if (integerProductId < 0 || integerProductId > buyLists.size()) {
+            if (integerProductId < 0 || integerProductId > buyLists.size() || Character.isLetter(charID[0])) {
                 System.out.println("### 잘못된 번호입니다. 다시 입력해주세요");
                 continue;
             }
