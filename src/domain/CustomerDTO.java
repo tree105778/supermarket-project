@@ -45,7 +45,7 @@ public class CustomerDTO {
     }
 
     public int getUserPoint() {
-        return userPoint;
+        return totalPay/100;
     }
 
     public void setUserPoint(int userPoint) {
