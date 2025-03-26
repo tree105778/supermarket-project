@@ -38,13 +38,25 @@ public class CustomerService {
                 case 4:
                     register();
                     break;
-                case 5:
+                case 5 :
+                    deleteUU();
+                    break;
+                case 6:
                     privacyAdmin();
                     break;
                 default:
                     System.out.println("# 메뉴를 다시 입력하세요!");
             }
         }
+    }
+
+    private void deleteUU() {
+        findUser();
+        String name = inputString("### 탈퇴할 회원 이름: ");
+        String phNum = inputString("### 전화번호: ");
+
+        String pw = inputString("### 비밀번호 입력: ");
+        customerRepository.deleteUser(name, pw);
     }
 
     private void privacyAdmin(){

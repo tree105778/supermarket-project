@@ -206,6 +206,11 @@ public class ProductService {
                         if(product.getProductId() == option){
                             Product pr = product;
                             int count = inputInteger("### 제품 수량: ");
+                            if(count > pr.getStock()){
+                                System.out.println("### 재고를 초과하셨습니다. 다시 선택하세요.");;
+                                continue;
+                            }
+                            pr.setStock(pr.getStock() - count);
                             ItemCart temp = new ItemCart(option, count, pr.getPrice());
                             itemList.add(temp);
                         }
