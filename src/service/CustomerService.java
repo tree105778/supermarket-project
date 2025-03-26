@@ -17,6 +17,9 @@ public class CustomerService {
     private final AdminService adminService = new AdminService();
     private final PurchaseService purchaseService = new PurchaseService();
 
+    private final String pwAdmin = "0000";
+
+
     public void start() {
         while (true) {
             startCustomerScreen();
@@ -36,7 +39,32 @@ public class CustomerService {
                     register();
                     break;
                 case 5:
-                    connectToAdmin();
+                    privacyAdmin();
+                    break;
+                default:
+                    System.out.println("# 메뉴를 다시 입력하세요!");
+            }
+        }
+    }
+
+    private void privacyAdmin(){
+        while(true){
+            System.out.println("====== 관리자 모드 접근 ======");
+            System.out.println("### 1. 비밀번호 입력");
+            System.out.println("### 2. 돌아가기");
+            int option = inputInteger("### 옵션 입력: ");
+            switch (option){
+                case 1:
+                    String pw = inputString("### 비밀번호 입력 : ");
+                    if(pw.equals(pwAdmin)){
+                        adminService.startAdminUI();
+                    }
+                    else{
+                        System.out.println("비밀번호가 틀렸습니다.");
+                        break;
+                    }
+                case 2:
+                    start();
                     break;
                 default:
                     System.out.println("# 메뉴를 다시 입력하세요!");

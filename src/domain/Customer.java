@@ -21,6 +21,8 @@ public class Customer {
         this.userPw = userPw;
     }
 
+
+
     public int getUserId() {
         return userId;
     }
