@@ -173,13 +173,8 @@ public class OrderRepository {
         List<BuyList> buyLists = new ArrayList<>();
         String sql = "SELECT " +
                 "bl.buy_id, bl.product_id, bl.count, bl.refund_count, " +
-<<<<<<< Updated upstream
-                "p.product_name, p.price, p.stock, p.active, p.category_id" +
-                " FROM BUY_LIST bl " +
-=======
                 "p.product_name, p.price, p.stock, p.active, p.category_id " +
                 "FROM BUY_LIST bl " +
->>>>>>> Stashed changes
                 "JOIN PRODUCT p ON p.product_id = bl.product_id " +
                 "WHERE buy_id = " + buyId;
 
