@@ -205,9 +205,12 @@ public class ProductRepository {
 
         try(PreparedStatement pstmt = conn.prepareStatement(sql);
         ){
+            pstmt.setInt(1, count);
+            pstmt.setInt(2, product_id);
             pstmt.executeQuery();
 
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }

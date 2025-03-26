@@ -70,7 +70,7 @@ public class PurchaseService {
         while (true) {
             for (int i = 0; i < buyLists.size(); i++) {
                 System.out.printf("%d. 상품 이름: %s, 개수: %d\n"
-                        , i, buyLists.get(i).getProduct().getProductId(),
+                        , i,
                         buyLists.get(i).getProduct().getProductName(),
                         buyLists.get(i).getCount());
             }

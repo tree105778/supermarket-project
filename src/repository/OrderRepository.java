@@ -154,10 +154,10 @@ public class OrderRepository {
     public List<BuyList> getBuyListByBuyId(int buyId) {
         List<BuyList> buyLists = new ArrayList<>();
         String sql = "SELECT " +
-                "bl.buy_id, bl.product_id, bl.count, bl.refund_count " +
+                "bl.buy_id, bl.product_id, bl.count, bl.refund_count, " +
                 "p.product_name, p.price, p.stock, p.active, p.category_id" +
-                "FROM BUY_LIST bl " +
-                "JOIN ON PRODUCT p ON p.product_id = bl.product_id " +
+                " FROM BUY_LIST bl " +
+                "JOIN PRODUCT p ON p.product_id = bl.product_id " +
                 "WHERE buy_id = " + buyId;
 
         try (Connection connection = DBConnectionManager.getConnection();
