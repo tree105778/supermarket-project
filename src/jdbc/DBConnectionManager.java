@@ -19,9 +19,9 @@ public class DBConnectionManager {
         // 객체를 생성하지 않고, 메소드를 강제로 실행하는 코드
         try {
             Class.forName(DRIVER);
-            System.out.println("JDBC 드라이버 강제 구동 완료");
+            //System.out.println("JDBC 드라이버 강제 구동 완료");
         } catch (ClassNotFoundException e) {
-            System.out.println("JDBC 드라이버 로드 실패");
+            //System.out.println("JDBC 드라이버 로드 실패");
             e.printStackTrace();
         }
     }
