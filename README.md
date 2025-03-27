@@ -69,6 +69,10 @@
 [요구사항 정의 스프레드시트 링크](https://docs.google.com/spreadsheets/d/1uygJGV_SW0c8-6Sy_mWWPZzLg4lsyQ_AEPvNigL00vM/edit?gid=0#gid=0)
 
 요구사항 명세서 및 데이터베이스 설계도와 설명은 위 링크에서 확인할 수 있습니다.
+<br>
+<br>
+[프로젝트 계층구조](https://docs.google.com/presentation/d/1dyoHFJ-xoTuQ9VRrLUS5ivXBKY7gGyb7lBkpeh7nwCs/edit#slide=id.g343e0f6016a_0_1)
+
 
 ## 7. WBS (Work Breakdown Structure)
 
@@ -112,3 +116,7 @@ https://docs.google.com/document/d/1cVwC8ddqjBRXJL6mDwOaXxTKXfQ3ohlDYxNyQiJ_wEE/
 MSA
 
 https://docs.google.com/document/d/1L5Hli3JZI4d1EzKvm9PSHh3Gl6xTAcdoNMjTHXr2B00/edit?tab=t.0
+
+스토리보드
+
+https://docs.google.com/document/d/1RHuH8_8yow3Y_Qr6LDOK4giunFfrJMhIYmtRphHgguw/edit?tab=t.0
