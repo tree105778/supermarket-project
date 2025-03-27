@@ -20,14 +20,18 @@ public class AdminRepository {
             List<BuyHistory> BuyHistoryList = new ArrayList<>();
             String sql = "";
 
+            // 구매내역은 모두 최신순으로 출력
+            // 고객 이름을 기준으로 구매내역 조회
             if(option == 1){
                 sql += "SELECT * FROM buy_history b JOIN customer c ON b.user_id = c.user_id" +
                         " WHERE c.user_name = ? ORDER BY b.buy_time DESC";
 
-            } else if (option == 2) {
+            } // 특정 날짜를 기준으로 구매내역 조회
+            else if (option == 2) {
                 sql += "SELECT * FROM buy_history WHERE TO_CHAR(buy_time, 'MM') = ? AND " +
                         "TO_CHAR(buy_time, 'DD') = ? ORDER BY buy_time DESC";
-            } else if (option == 3) {
+            } // 모든 구매내역 조회
+            else if (option == 3) {
             sql += "SELECT * FROM buy_history ORDER BY buy_time DESC";
         }
 
