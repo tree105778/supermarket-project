@@ -41,7 +41,8 @@ public class CommonUI {
         System.out.println("### 2. 제품 조회");
         System.out.println("### 3. 고객 정보 조회");
         System.out.println("### 4. 회원가입");
-        System.out.println("### 5. 관리자 외 출입금지");
+        System.out.println("### 5. 회원탈퇴");
+        System.out.println("### 6. 관리자 외 출입금지");
         makeLine();
     }
 

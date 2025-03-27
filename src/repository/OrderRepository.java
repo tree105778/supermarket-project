@@ -80,7 +80,6 @@ public class OrderRepository {
         try {
             conn = DBConnectionManager.getConnection();
             conn.setAutoCommit(false);
-            System.out.println("refundProcess");
 
             refundBuyList(conn, buyId, productId, refundCount);
             ItemCart temp = new ItemCart(productId, refundCount, 0);
@@ -146,7 +145,6 @@ public class OrderRepository {
             pstmt.setInt(2, refundCount);
             pstmt.setInt(3, buyId);
             pstmt.setInt(4, productId);
-            System.out.println("refundBuyList");
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

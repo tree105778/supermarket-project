@@ -32,7 +32,7 @@ public class CustomerRepository {
 
     // 회원 삭제 로직
     public void deleteUser(String username, String userPw) {
-        String sql = "UPDATE CUSTOMER SET ACTIVE = 'N' WHERE USER_NAME = ?, USER_PW = ?";
+        String sql = "UPDATE CUSTOMER SET ACTIVE = 'N' WHERE USER_NAME = ? AND USER_PW = ?";
 
         try (Connection conn = DBConnectionManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -40,7 +40,7 @@ public class CustomerRepository {
             pstmt.setString(2, userPw);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("탈퇴에 실패했습니다!");
         }
     }
 
