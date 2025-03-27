@@ -31,16 +31,17 @@ public class CustomerRepository {
     }
 
     // 회원 삭제 로직
-    public void deleteUser(String username, String userPw) {
-        String sql = "UPDATE CUSTOMER SET ACTIVE = 'N' WHERE USER_NAME = ?, USER_PW = ?";
+    public void deleteUser(String username, String phNum, String userPw) {
+        String sql = "UPDATE CUSTOMER SET ACTIVE = 'N' WHERE USER_NAME = ? AND PHONE_NUMBER = ? AND USER_PW = ?";
 
         try (Connection conn = DBConnectionManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, username);
-            pstmt.setString(2, userPw);
+            pstmt.setString(2, phNum);
+            pstmt.setString(3, userPw);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("탈퇴에 실패했습니다!");
         }
     }
 
